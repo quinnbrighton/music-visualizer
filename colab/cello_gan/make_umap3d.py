@@ -23,17 +23,17 @@ xyz = (xyz - xyz.mean(0)) / xyz.std(0); keep = rng.choice(len(xyz), 24000, repla
 col = note_col(P[o], CF[o])
 fig = plt.figure(figsize=(6.4, 6.4), facecolor=BG); ax = fig.add_axes([0, 0.04, 1, 0.9], projection="3d"); ax.set_facecolor(BG)
 def rot(a, axis):                                                          # rotation matrix about the x or y axis
-    c_, s_ = np.cos(a), np.sin(a); return np.array([[1, 0, 0], [0, c_, -s_], [0, s_, c_]]) if axis == "x" else np.array([[c_, 0, s_], [0, 1, 0], [-s_, 0, c_]])
-xyz = (xyz - np.median(xyz, 0)) @ rot(np.pi / 2, "y").T                    # turn the cloud 90 degrees, then spin it about the new x axis
+    c_, s_ = np.cos(a), np.sin(a); return {"x": np.array([[1, 0, 0], [0, c_, -s_], [0, s_, c_]]), "y": np.array([[c_, 0, s_], [0, 1, 0], [-s_, 0, c_]]), "z": np.array([[c_, -s_, 0], [s_, c_, 0], [0, 0, 1]])}[axis]
+xyz = (xyz - np.median(xyz, 0)) @ rot(np.pi / 2, "y").T                    # turn the cloud 90 degrees, then spin it about the vertical axis
 sc = ax.scatter(xyz[o, 0], xyz[o, 1], xyz[o, 2], c=col, s=3, lw=0, depthshade=False); ax.set_axis_off()
 r = np.percentile(np.linalg.norm(xyz, axis=1), 99); c0 = np.zeros(3)                  # sphere that holds the cloud at any rotation
 ax.set_xlim(c0[0] - r, c0[0] + r); ax.set_ylim(c0[1] - r, c0[1] + r); ax.set_zlim(c0[2] - r, c0[2] + r); ax.set_box_aspect((1, 1, 1), zoom=1.6)
 fig.text(0.03, 0.95, "The cello sound space in 3D", fontsize=12, weight="bold")
 fig.text(0.03, 0.915, "hue = note name, brightness = octave, saturation = pitch confidence", fontsize=8.5, color="#52514e")
 tmp = "/tmp/_umap3d"; os.makedirs(tmp, exist_ok=True)
-ax.view_init(elev=10, azim=-90)                                            # camera fixed, x axis runs left to right across the screen
+ax.view_init(elev=10, azim=-90)                                            # camera fixed; z is vertical on screen
 for i, ang in enumerate(range(0, 360, 5)):
-    q = xyz[o] @ rot(np.radians(ang), "x").T; sc._offsets3d = (q[:, 0], q[:, 1], q[:, 2]); fig.savefig(f"{tmp}/f{i:03d}.png", dpi=80, facecolor=BG)
+    q = xyz[o] @ rot(np.radians(ang), "z").T; sc._offsets3d = (q[:, 0], q[:, 1], q[:, 2]); fig.savefig(f"{tmp}/f{i:03d}.png", dpi=80, facecolor=BG)
 plt.close(fig)
 subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-framerate", "12", "-i", f"{tmp}/f%03d.png", "-vf",
                 "scale=420:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=96:stats_mode=diff[p];[b][p]paletteuse=dither=bayer:bayer_scale=4:diff_mode=rectangle", "-loop", "0", f"{OUTD}/umap3d_spin.gif"], check=True)
