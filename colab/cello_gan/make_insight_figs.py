@@ -93,3 +93,14 @@ fig.text(0.125, 0.43, "Two channels up close: pitch lives in a few channels; mos
 fig.text(0.01, 0.01, "Final codec, 2 s of the held-out passage, every channel pushed by the same 1.5 latent SDs. Heatmap colours are scaled per row; numbers show the size of the larger effects.", color=INK2, fontsize=8.5)
 fig.savefig(f"{OUTD}/channel_knobs.png", dpi=110, bbox_inches="tight"); plt.close(fig); print("wrote channel_knobs.png", "| picks", picks)
 np.set_printoptions(precision=1, suppress=True); print(eff)
+
+# 3b. the same pushes heard as spectrograms: as decoded, then the pitch, brightness and bow-noise channels pushed
+show = [(None, "as decoded")] + [(c, "channel %d pushed: %s" % (c, lab)) for c, lab in ((picks[0], "pitch +38 cents"), (1, "brightness, centroid +35%"), (picks[1], "bow noise / air +7.8 dB"))]
+fig, axs = plt.subplots(1, 4, figsize=(14, 4), sharey=True); vmax = None
+for ax, (c, lab) in zip(axs, show):
+    y = y0 if c is None else ys[c]; f, t, Sd = ss.stft(y, SR, nperseg=1024, noverlap=896); S_ = 20 * np.log10(np.abs(Sd) + 1e-6); mm = f <= 8000
+    vmax = S_[mm].max() if vmax is None else vmax
+    ax.pcolormesh(t, f[mm] / 1000, S_[mm], shading="auto", cmap="magma", vmin=vmax - 80, vmax=vmax); ax.set_title(lab, loc="left", fontsize=10); ax.set_xlabel("seconds")
+axs[0].set_ylabel("kHz")
+fig.suptitle("The same 2 s decoded with one channel pushed at a time (same push size, same colour scale)", x=0.01, ha="left", fontsize=11, weight="bold")
+fig.tight_layout(); fig.savefig(f"{OUTD}/channel_spectrograms.png", dpi=110); plt.close(fig); print("wrote channel_spectrograms.png")
