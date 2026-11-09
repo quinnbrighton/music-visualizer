@@ -120,6 +120,13 @@ GitHub plays these mp4s when you click them. [`tour.ipynb`](tour.ipynb) has inli
 
 ## How it works
 
+![The codec's journey](docs/assets/journey.png)
+
+*Each codec version on the same 15 s of the held-out recording. Switching from spectrogram + Griffin-Lim to a synthesizer-based
+decoder halved the error. The later steps barely move this number but changed the sound a lot (quantizing to 1.8 kbit/s costs
+only 0.012). Log-mel error measures the average spectrum, so it can't see what adversarial training adds; the GAN figure below
+shows that.*
+
 ### 1. The codec: 24 numbers, 25 times a second
 
 An encoder compresses 24 kHz audio into a 24-dimensional latent vector every 40 ms. The decoder doesn't predict a spectrogram.
@@ -178,6 +185,12 @@ Most design decisions came from hearing a problem and tracing it to a measurable
 - **Honest bit rate.** Pitch is carried *inside* the latent rather than sent alongside it, so 1.8 kbit/s counts everything the decoder
   needs.
 
+![Rate-distortion curve](docs/assets/rate_distortion.png)
+
+*Quality against bit rate as quantizer stages are added (held-out validation recordings). The first few stages carry most of the
+information: one stage alone leaves pitch 177 cents off, two bring it to 27. After about 1 kbit/s each stage buys little, and at
+1.8 kbit/s pitch is at the edge of what trained ears notice.*
+
 ### 2. Shaping the latent space
 
 A latent is only useful for generation if its geometry makes sense. I measured how much an equal-sized nudge to each channel changes
@@ -193,6 +206,19 @@ be predicted fell from **11.4% to 5.4%**, and reconstruction improved.
 
 My first attempt used per-channel unit variance, as in β-VAE and DIP-VAE, and it worked *against* this goal: it stretched quiet but
 important channels and amplified noisy ones. Disentanglement and sound-space isometry are different objectives, so I dropped it.
+
+![Where the surprise is](docs/assets/surprise.png)
+
+*The same causal predictor, trained the same way on each codec's latents, trying to predict the next frame of the held-out passage
+from the previous 1.8 s. The old latent spikes unpredictably throughout. The regularized latent stays low: 9% unexplained on this
+passage against 21%, the same halving as the 11.4% to 5.4% measured over the full test set. What's left is concentrated in the
+moments that really are new, such as note changes and bow attacks.*
+
+![What each channel does](docs/assets/channel_knobs.png)
+
+*Every channel pushed by the same amount, and what changes in the decoded sound. Pitch is concentrated in channels 8–10. Channel 6
+mostly adds bow noise and air. Most other channels mix loudness and tone colour. That is expected: I regularized for equal-sized
+effects (isometry), not for one meaning per channel (disentanglement).*
 
 ![The embedding](docs/assets/embedding.png)
 
