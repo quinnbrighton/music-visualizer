@@ -36,7 +36,8 @@ An **encoder–decoder** (autoencoder) is two networks trained together:
 - The **decoder** rebuilds the input from that code alone.
 
 Training only asks that what comes out matches what went in. The latent is far smaller than the input, so the encoder has to learn
-which details matter: here, the context. The decoder learns to supply everything else, the cello itself.
+which details matter: here, the context. The decoder learns to supply everything else, the cello itself. Mine is trained
+adversarially, as a GAN, so the detail it supplies is realistic cello texture rather than a blurred average (more below).
 
 The figure above is one real second of the held-out recording. The encoder turns 24,000 samples into 600 numbers. The decoder turns
 those 600 numbers back into 24,000 samples. Quantized, the latent is **213× smaller** than the raw audio.
@@ -94,6 +95,7 @@ Every number on this page comes from **a held-out recording the models never tra
 |---|---|
 | **Codec pitch accuracy** | **7 cents** median error on held-out audio (a cent is 1/100 of a semitone; trained listeners notice about 5–10) |
 | **Codec bit rate** | **1.8 kbit/s** with a 12-stage residual vector quantizer, at 8 cents. That is roughly 1/70 of a 128 kbit/s MP3 |
+| **Note edges (adversarial decoder)** | Note endings decay at **−3.3 dB per 10 ms**, against −3.6 in real playing and −2.4 before adversarial training |
 | **Dynamics kept** | **94%** of slow amplitude movement (bowing, vibrato) vs **25%** for the spectrogram + Griffin-Lim baseline I started from |
 | **Latent predictability** | Unpredictable share of the latent cut from **11.4% to 5.4%**, while reconstruction *improved* (0.797 → 0.788 spectral error) |
 | **Rendering from curves** | **6.4 cents** median pitch error, 93% of frames within 50 cents |
@@ -122,8 +124,28 @@ GitHub plays these mp4s when you click them. [`tour.ipynb`](tour.ipynb) has inli
 
 An encoder compresses 24 kHz audio into a 24-dimensional latent vector every 40 ms. The decoder doesn't predict a spectrogram.
 It drives a **bank of phase-locked sine oscillators at the harmonics of the pitch it reads from the latent**, predicts how loud each
-harmonic should be, and adds a learned noise path for bow texture. It is trained with multi-period and multi-band STFT
-discriminators, the recipe used by HiFi-GAN, BigVGAN and DAC.
+harmonic should be, and adds a learned noise path for bow texture.
+
+**Why the decoder is a GAN.** The latent keeps the *shape* of the sound: pitch, loudness, spectral balance and how they move. It
+can't keep the exact *microstructure*: the grain of the bow, the tiny irregularities in each cycle, the crispness of a note
+starting and stopping. That information is lost in compression.
+- **Reconstruction losses alone fail here.** A loss like spectral or mean-squared error gets its best score by predicting the
+  *average* of every waveform that fits the latent. Averaging many slightly different bow textures cancels them out, so the result
+  is smooth, blurred and too clean. That is exactly what I heard: it sounded hollow and the gaps felt too clean.
+- **A discriminator fixes it.** I added networks trained to tell real cello from decoded cello. The decoder is rewarded for
+  fooling them. It no longer has to match the original sample by sample, only to produce microstructure a real cello could have
+  produced.
+- **It helps the parts the ear cares about and costs little elsewhere.** The ear is insensitive to exact waveform phase and very
+  sensitive to texture and transients. This is the perception–distortion tradeoff ([Blau & Michaeli 2018](https://arxiv.org/abs/1711.06077)):
+  at a fixed bit rate you can't minimize sample-level error and maximize realism at once. At 1.8 kbit/s, realism is the one worth
+  having.
+
+I used two kinds of discriminator, as in HiFi-GAN, BigVGAN and DAC:
+- **Multi-period:** reshapes the waveform at several periods, to judge whether each cycle repeats the way a bowed string does.
+- **Multi-band STFT:** judges texture across time and frequency.
+
+A feature-matching loss keeps training stable. The reconstruction losses stay on to hold the shape, while the discriminators
+supply the detail.
 
 ![Original vs reconstruction](docs/assets/codec_compare.png)
 
@@ -132,8 +154,9 @@ keeps their spacing, their relative strengths and the vibrato wobble.*
 
 Most design decisions came from hearing a problem and tracing it to a measurable cause:
 
-- **It sounded hollow.** Note endings decayed at −2.4 dB per 10 ms against −3.6 dB in real playing. Adversarial training brought it
-  to −3.3.
+- **It sounded hollow.** Note endings decayed at −2.4 dB per 10 ms against −3.6 dB in real playing: the averaging blur described
+  above, smearing each note's edge. Adversarial training brought it to −3.3, and the difference was clearly audible even where
+  the spectral metrics barely moved.
 - **The gaps felt too clean.** The space between harmonics was 2.2 dB quieter than real cello. A learned noise path fills it.
 - **There was a hiss in long renders.** The decoder's group normalization took statistics over the whole clip, but it had only
   trained on 4 s clips, so long renders gained about 10 dB above 6.4 kHz. Decoding in overlapping 4 s windows removed it (0.0 dB difference).

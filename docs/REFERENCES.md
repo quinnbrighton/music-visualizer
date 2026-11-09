@@ -23,6 +23,7 @@ Cited in the README to place the codec in context.
 | Kong et al. 2020, [HiFi-GAN](https://arxiv.org/abs/2010.05646) | Multi-period discriminator and feature-matching loss |
 | Lee et al. 2022, [BigVGAN](https://arxiv.org/abs/2206.04658) | Discriminator and loss-weighting recipe for a universal GAN vocoder |
 | Kumar et al. 2023, [High-Fidelity Audio Compression with Improved RVQGAN (DAC)](https://arxiv.org/abs/2306.06546) | Multi-band STFT discriminator; residual-VQ codec design |
+| Blau & Michaeli 2018, [The Perception-Distortion Tradeoff](https://arxiv.org/abs/1711.06077) | Why the decoder is adversarial: at a fixed rate, low sample-level error and realism trade off |
 | Défossez et al. 2022, [High Fidelity Neural Audio Compression (EnCodec)](https://arxiv.org/abs/2210.13438) | Codec loss balancing and STFT discriminators |
 | Zeghidour et al. 2021, [SoundStream](https://arxiv.org/abs/2107.03312) | Residual vector quantization: the 12-stage quantizer that gives 1.8 kbit/s |
 | Siuzdak 2023, [Vocos](https://arxiv.org/abs/2306.00814) | Baseline vocoder (stock and cello-fine-tuned) in the codec comparisons |
