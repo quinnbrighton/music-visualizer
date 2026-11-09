@@ -41,6 +41,6 @@ for nm, txt in (("/tmp/_l1.png", "1. Reconstruction"), ("/tmp/_l2.png", "2. Late
     im = Image.new("RGBA", (720, 40), (0, 0, 0, 0)); ImageDraw.Draw(im).text((16, 8), txt, font=font, fill=(255, 255, 255, 255)); im.save(nm)
 D = len(y0) / SR + 0.4
 subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", f"{AUD}/11_loudness_push.wav", "-loop", "1", "-i", "/tmp/_l1.png", "-loop", "1", "-i", "/tmp/_l2.png", "-filter_complex",
-                f"[0:a]showwaves=s=720x200:mode=cline:colors=0x2a78d6,format=yuv420p[w];[w][1:v]overlay=0:0:enable='lt(t,{D})':shortest=1[w1];[w1][2:v]overlay=0:0:enable='gte(t,{D})':shortest=1,format=yuv420p[v]",
+                f"[0:a]showwaves=s=720x200:mode=cline:draw=full:colors=0x2a78d6,format=yuv420p[w];[w][1:v]overlay=0:0:enable='lt(t,{D})':shortest=1[w1];[w1][2:v]overlay=0:0:enable='gte(t,{D})':shortest=1,format=yuv420p[v]",
                 "-map", "[v]", "-map", "0:a", "-c:v", "libx264", "-crf", "28", "-c:a", "aac", "-b:a", "160k", "-shortest", f"{AUD}/11_loudness_push.mp4"], check=True)
 print("wrote 11_loudness_push.mp4")

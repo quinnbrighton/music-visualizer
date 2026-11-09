@@ -1,0 +1,7 @@
+# Inference package neuralcello/ (tested: Python 3.11, torch 2.6.0 CUDA 12.4 and CPU, numpy 2.4, scipy 1.15, soundfile 0.13, pretty_midi 0.2.11)
+torch>=2.0        # needs F.scaled_dot_product_attention and torch.load(weights_only=True); CPU-only builds work
+numpy
+scipy             # resampling input audio that is not 24 kHz (encode)
+soundfile         # reading / writing wav
+pretty_midi       # MIDI in and out (compose / perform)
+# Not needed for inference: torchaudio, vocos (the backbone is vendored), music21, tensorflow. Training scripts in colab/ need more.

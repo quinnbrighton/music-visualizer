@@ -4,6 +4,58 @@ I've played the cello for 10 years. For this project I built a neural audio code
 composer for solo cello. I trained them from scratch on about 12 hours of recordings and chained them so that written notes come
 out as audio, without any sampled instrument. Every model was judged by ear as well as by the numbers.
 
+## Key results
+
+| | Result |
+|---|---|
+| **Codec pitch accuracy** | **7 cents** median error on held-out audio (a cent is 1/100 of a semitone; trained listeners notice about 5–10) |
+| **Codec bit rate** | **1.8 kbit/s** with a 12-stage residual vector quantizer, at 8 cents. That is roughly 1/70 of a 128 kbit/s MP3 |
+| **Note edges (adversarial decoder)** | Note endings decay at **−3.3 dB per 10 ms**, against −3.6 in real playing and −2.4 before adversarial training |
+| **Dynamics kept** | **94%** of slow amplitude movement (bowing, vibrato) vs **25%** for the spectrogram + Griffin-Lim baseline I started from |
+| **Latent predictability** | Unpredictable share of the latent cut from **11.4% to 5.4%**, while reconstruction *improved* (0.797 → 0.788 spectral error) |
+| **Rendering from curves** | **6.4 cents** median pitch error, 93% of frames within 50 cents |
+| **Notes → performance** | **93–94%** of the audio within 50 cents of the written notes; vibrato at **6.1–6.4 Hz, ±10 cents**, matching measured cellists |
+| **Composition** | **95–100%** of notes in key; never more than **16 notes** copied in a row from any single training melody |
+
+## Listen
+
+| Clip | What it is |
+|---|---|
+| [Original](docs/assets/audio/1_original_maisky.mp4) | 12 s of the held-out Maisky recording |
+| [Codec reconstruction](docs/assets/audio/2_codec_reconstruction.mp4) | The same 12 s, encoded to 24 numbers per 40 ms and decoded |
+| [Performed from notes](docs/assets/audio/3_performed_from_notes_maisky.mp4) | Only the *notes* of that passage, extracted automatically. The performance model chooses the pitch bends, vibrato and dynamics |
+| [Composed: air, D minor 3/4](docs/assets/audio/4_composed_air_dminor.mp4) | Written by the composer, played by the rest of the chain |
+| [Composed: air, G major 4/4](docs/assets/audio/5_composed_air_gmajor.mp4) | |
+| [Composed: chorale style, D minor](docs/assets/audio/6_composed_chorale_dminor.mp4) | |
+| [Composed: suite style, G major](docs/assets/audio/7_composed_suite_style_gmajor.mp4) | Conditioned on the Bach-suite style token |
+
+GitHub plays these mp4s when you click them. [`tour.ipynb`](tour.ipynb) has inline players plus every figure below.
+
+---
+
+## Run it yourself
+
+The trained models are in the repo. Open [`run.ipynb`](run.ipynb) to compose a piece, hear it performed, reconstruct a recording through
+the codec and edit it through the latent, or use the command line:
+
+```bash
+git clone https://github.com/quinnbrighton/neural-cello && cd neural-cello
+pip install -r requirements.txt
+python -m neuralcello compose piece.wav --style folk --key "D minor" --meter 3/4 --bars 24   # writes piece.mid and piece.wav
+python -m neuralcello perform any_melody.mid out.wav                                         # perform any MIDI file
+python -m neuralcello reconstruct recording.wav rebuilt.wav                                   # audio -> latent -> audio
+```
+
+```python
+import neuralcello as nc
+m = nc.load()                                    # GPU if available, else CPU
+midi = m.compose(style="cello", key="G major", meter="4/4", bars=16)
+audio = m.perform(midi)                          # 24 kHz
+z = m.encode(audio)                              # (frames, 24) latent at 25 Hz
+```
+
+A GPU performs a minute of music in about 3 s; a CPU takes about 30 s.
+
 ## The problem: sound is dense
 
 A photo looks sharp only when it has millions of pixels. Sound works the same way, except the pixels arrive in a stream. To capture
@@ -88,35 +140,6 @@ flowchart LR
 ```
 
 Every number on this page comes from **a held-out recording the models never trained on**: Mischa Maisky's Bach Cello Suite No. 2.
-
-## Key results
-
-| | Result |
-|---|---|
-| **Codec pitch accuracy** | **7 cents** median error on held-out audio (a cent is 1/100 of a semitone; trained listeners notice about 5–10) |
-| **Codec bit rate** | **1.8 kbit/s** with a 12-stage residual vector quantizer, at 8 cents. That is roughly 1/70 of a 128 kbit/s MP3 |
-| **Note edges (adversarial decoder)** | Note endings decay at **−3.3 dB per 10 ms**, against −3.6 in real playing and −2.4 before adversarial training |
-| **Dynamics kept** | **94%** of slow amplitude movement (bowing, vibrato) vs **25%** for the spectrogram + Griffin-Lim baseline I started from |
-| **Latent predictability** | Unpredictable share of the latent cut from **11.4% to 5.4%**, while reconstruction *improved* (0.797 → 0.788 spectral error) |
-| **Rendering from curves** | **6.4 cents** median pitch error, 93% of frames within 50 cents |
-| **Notes → performance** | **93–94%** of the audio within 50 cents of the written notes; vibrato at **6.1–6.4 Hz, ±10 cents**, matching measured cellists |
-| **Composition** | **95–100%** of notes in key; never more than **16 notes** copied in a row from any single training melody |
-
-## Listen
-
-| Clip | What it is |
-|---|---|
-| [Original](docs/assets/audio/1_original_maisky.mp4) | 12 s of the held-out Maisky recording |
-| [Codec reconstruction](docs/assets/audio/2_codec_reconstruction.mp4) | The same 12 s, encoded to 24 numbers per 40 ms and decoded |
-| [Performed from notes](docs/assets/audio/3_performed_from_notes_maisky.mp4) | Only the *notes* of that passage, extracted automatically. The performance model chooses the pitch bends, vibrato and dynamics |
-| [Composed: air, D minor 3/4](docs/assets/audio/4_composed_air_dminor.mp4) | Written by the composer, played by the rest of the chain |
-| [Composed: air, G major 4/4](docs/assets/audio/5_composed_air_gmajor.mp4) | |
-| [Composed: chorale style, D minor](docs/assets/audio/6_composed_chorale_dminor.mp4) | |
-| [Composed: suite style, G major](docs/assets/audio/7_composed_suite_style_gmajor.mp4) | Conditioned on the Bach-suite style token |
-
-GitHub plays these mp4s when you click them. [`tour.ipynb`](tour.ipynb) has inline players plus every figure below.
-
----
 
 ## How it works
 
@@ -260,8 +283,6 @@ open strings (C, G, D, A) have black outlines. The note islands keep their shape
 pitch moves to the next band. Grey frames have no identifiable pitch (bow noise, attacks, silence between notes); they gather in a
 few distinct regions of their own.*
 
-The lowest median, B1, is below the cello's range; it comes from pitch-tracker errors and flat low notes in the training audio.
-
 ### 3. Interpretability: reading the latent, then editing music with it
 
 **Peeling the layers.** Measured directly in the 24-dimensional latent (not in a UMAP picture), the variation peels apart in a clear
@@ -285,6 +306,11 @@ to a performance and decoded the result. The push doesn't act like a volume knob
 played harder.
 
 Listen: [the held-out Maisky passage, reconstruction then the loudness push at the same level](docs/assets/audio/11_loudness_push.mp4).
+
+**Volume knob vs latent push, 5 s each.** The same passage, once with the reconstruction simply turned up by the push's 9.8 dB, once
+with the push applied in the latent, at identical loudness. This is the 5 s stretch where the two differ most (seconds 7–12 of the
+passage): the push takes about 3.5 dB out of the range below 125 Hz and adds about 3.3 dB around 1.5–3 kHz.
+[Listen: volume turned up, then latent push](docs/assets/audio/12_volume_vs_latent_5s.mp4).
 
 ![The latent loudness push across 89 recordings](docs/assets/loudness_push_stats.png)
 
@@ -355,13 +381,6 @@ held-out music, caps verbatim reuse at 16 notes.
 
 ---
 
-## What I'd do next
-
-- Predict per-note dynamics and vibrato directly in the composer instead of with rules.
-- Add phrase and section-level structure (repeats, return of the opening theme) without hand-written form templates.
-- Turn the halved unpredictability into real bits with a predictive quantizer.
-- Retrain the same pipeline on violin, viola or voice.
-
 ## Compute
 
 Everything here trains locally on a single RTX 3060 (12 GB). For speed I optionally ran the longer jobs on Colab.
@@ -370,17 +389,14 @@ Everything here trains locally on a single RTX 3060 (12 GB). For speed I optiona
 
 | Path | |
 |---|---|
+| [`run.ipynb`](run.ipynb) | Run every model yourself: compose, perform, reconstruct, edit through the latent |
+| [`tour.ipynb`](tour.ipynb) | Guided, plain-language tour of the results, with audio |
+| `neuralcello/` | Inference package (codec, latent flow model, performance model, composer); no training code or data needed |
+| `models/` | Trained weights (fp16, about 125 MB) and the latent loudness direction |
 | [`docs/TECHNICAL.md`](docs/TECHNICAL.md) | Full write-up: every design decision, its measurement and the literature behind it |
 | [`docs/REFERENCES.md`](docs/REFERENCES.md) | Papers used, by stage |
-| [`v2/LAB_NOTEBOOK.md`](v2/LAB_NOTEBOOK.md) | Chronological lab notebook, including dead ends and retracted results |
-| `colab/cello_gan/` | Codec (`train_gan.py`, `train_rvq.py`, `train_reg.py`), flow models (`train_lat.py`, `train_curve.py`), composer (`train_symlm.py`, `gen_sym.py`), full chain (`midi_to_audio.py`) |
+| `colab/cello_gan/` | Training and analysis: codec (`train_gan.py`, `train_rvq.py`, `train_reg.py`), flow models (`train_lat.py`, `train_curve.py`), composer (`train_symlm.py`), figure scripts (`make_*.py`) |
 | `v2/` | Earlier codec research: DDSP and harmonic decoders, encoder studies, evaluation tools |
-
-```bash
-cd colab/cello_gan
-STYLE=folk KEY="D minor" METER=3/4 BARS=24 BPM=58 TAU=0.6 python gen_sym.py <composer.pt> piece.mid   # compose
-VIB=0.6 python midi_to_audio.py <codec.pt> <latent_model.pt> <curve_model.pt> piece.mid piece.wav      # perform
-```
 
 ## Data and credits
 
@@ -388,4 +404,7 @@ VIB=0.6 python midi_to_audio.py <codec.pt> <latent_model.pt> <curve_model.pt> pi
   redistributed; every recording is credited and linked in [`docs/SOURCES.md`](docs/SOURCES.md).
 - **Symbolic:** public-domain collections bundled with [music21](https://web.mit.edu/music21/), and the Bach cello suites from the
   [Mutopia Project](https://www.mutopiaproject.org/) (some movements CC BY-SA 3.0).
+- **Model weights:** trained on the recordings listed in [`docs/SOURCES.md`](docs/SOURCES.md) for non-commercial research. `models/copyguard.npz`
+  holds interval patterns from the symbolic training melodies (including CC BY-SA 3.0 Mutopia movements) so generated music can be checked
+  against copying.
 - **Papers:** every paper used, grouped by stage with what I took from each, in [`docs/REFERENCES.md`](docs/REFERENCES.md).

@@ -43,7 +43,7 @@ for i, s_ in enumerate(steps): ax.text(i, s_[1] + 0.015, "%.3f" % s_[1], ha="cen
 ax.axhline(0.146, color=ORANGE, lw=1.2, ls="--"); ax.text(4.4, 0.62, "dashed line: uncompressed ceiling\n(true spectrogram + Griffin-Lim): 0.146", ha="right", color=ORANGE, fontsize=9)
 ax.set_xticks(xs); ax.set_xticklabels([s_[0] for s_ in steps], fontsize=9); ax.set_ylabel("log-mel error (lower is better)"); ax.set_ylim(0, 1.0)
 ax.set_title("The codec's journey, measured on one fixed 15 s window of the held-out recording", loc="left")
-ax.text(0, -0.30, "Grey: from the lab notebook. Blue: recomputed for this figure.\nLog-mel error rewards matching the average spectrum, so it can't see what the adversarial stage adds (see the GAN figure).",
+ax.text(0, -0.30, "Grey: earlier versions, measured on the same window. Blue: recomputed for this figure.\nLog-mel error rewards matching the average spectrum, so it can't see what the adversarial stage adds (see the GAN figure).",
         transform=ax.get_xaxis_transform(), color=INK2, fontsize=8.5)
 fig.tight_layout(); fig.savefig(f"{OUTD}/journey.png", dpi=110, bbox_inches="tight"); plt.close(fig); print("wrote journey.png")
 

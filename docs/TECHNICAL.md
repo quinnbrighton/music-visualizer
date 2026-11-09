@@ -13,7 +13,7 @@ Each stage is a separate, inspectable model with a clear job. The audio codec is
 recordings to a 25 Hz, 24-number-per-frame description, or about 1.8 kbit/s once quantized.
 
 > **Scope and honesty.** Every number below comes from a results file and a held-out evaluation. The test recording (a Mischa Maisky
-> performance) was never trained on. Wrong conclusions were retracted in the lab notebook rather than quietly dropped. Listening
+> performance) was never trained on. Listening
 > overruled metrics when they disagreed.
 
 ---
@@ -34,7 +34,6 @@ recordings to a 25 Hz, 24-number-per-frame description, or about 1.8 kbit/s once
 
 | What | File |
 |---|---|
-| Codec systems compared on the same 15 s held-out window (level-matched) | `v2/report/system_comparison4.mp4` |
 | Generated pieces: D minor 3/4, G major 4/4, C major minuet | `colab_results/symlm/pieces/*.mp4` |
 | Best-scoring generated pieces (F major 3/8, B♭ major 4/4, G major 4/4, A minor 3/4) | `colab_results/symlm/batch/*.mp4` |
 | A held-out Maisky passage performed from its notes alone, old vs new chain | `colab_results/midi/maisky_from_midi_*.wav` |
@@ -114,28 +113,11 @@ The project went through many design changes, and each one was driven by a measu
 
 - **Rigor:** fixed held-out test and validation splits (near-duplicate recordings removed), level-matched listening comparisons, seed
   replicates (sampled decoding reproduces within 1%, so differences above about 2% are real), a stall rule that abandons a line after
-  two non-improving experiments, and a lab notebook with every failure and retraction (`v2/LAB_NOTEBOOK.md`).
-- **Compute:** local RTX 3060 plus cloud GPUs (Colab, RTX PRO 6000 Blackwell 96 GB) driven by resumable pipeline scripts. Long runs
-  write status files and auto-release the paid runtime when done. A lost-output incident (a runtime released before Drive flushed)
-  was diagnosed and fixed in the release script.
+  two non-improving experiments.
+- **Compute:** everything trains on a single RTX 3060 (12 GB); longer runs optionally on Colab, driven by resumable pipeline scripts.
 - **Scale of the work:** about 20 training pipelines (codecs, quantizers, token LMs, flow models, curve models, note models), each
   with in-training evaluations tied to perceptual failure modes (pitch error in cents, note-edge decay, harmonic contrast, texture,
   movement per frame, vibrato statistics).
-
-## What this shows I can do
-
-- **Research engineering:** take an open-ended goal ("make it sound like a cello"), turn listening complaints into measurable
-  causes, and fix them one at a time.
-- **Generative modelling across the stack:** VAEs, GAN vocoders, residual VQ, autoregressive transformers, rectified-flow models,
-  classifier-free guidance, symbolic sequence models.
-- **Signal processing:** harmonic synthesis, STFT/ISTFT, pitch tracking and cleaning, spectral and modulation analysis, vibrato
-  estimation.
-- **Measurement discipline:** baselines that can fail, frozen-predictor and copy audits, retractions when evidence changes, and
-  metrics that serve the ear rather than replace it.
-- **Reading and applying the literature:** DDSP, RAVE, HiFi-GAN/BigVGAN/DAC, MusicGen, SoundStorm, Kyutai's continuous audio LMs,
-  StyleGAN2, β-VAE/DIP-VAE, isometric autoencoders, rate–distortion theory.
-- **Shipping under constraints:** a 12 GB GPU, a 31 GB RAM machine shared with other work, paid cloud compute with hard budget
-  controls.
 
 ## Utility and future applications
 
@@ -161,7 +143,7 @@ The project went through many design changes, and each one was driven by a measu
 
 | Path | Contents |
 |---|---|
-| `v2/` | Codec research: harmonic and DDSP decoders, encoders, evaluation tools, `LAB_NOTEBOOK.md`, `report/` (comparisons, findings) |
+| `v2/` | Codec research: harmonic and DDSP decoders, encoders, evaluation tools |
 | `colab/cello_gan/train_gan.py`, `train_rvq.py`, `train_reg.py` | Adversarial codec, residual-VQ codec, regularized sound-space codec |
 | `colab/cello_gan/train_lat.py`, `gen_lat.py` | Rectified-flow latent model (curves → latent) |
 | `colab/cello_gan/guess_notes.py`, `train_curve.py` | Note guessing; note-conditioned expressive curve model |
@@ -195,14 +177,4 @@ The codec scripts also read a few environment variables for the model configurat
 - **Prior work this builds on:** DDSP (Engel et al. 2020), RAVE (Caillon & Esling 2021), HiFi-GAN / BigVGAN / DAC discriminators,
   Vocos, MusicGen (Copet et al. 2023), Kyutai's continuous audio language models (2025), MIDI-DDSP, ViolinDiff, StyleGAN2 path-length
   regularization, DIP-VAE, isometric autoencoders. The frozen MERT encoder was tested and found *worse* than a log-mel encoder for
-  reconstruction (documented in `v2/report/README.md`).
-
-## Limitations
-
-- **Small data and short runs:** one instrument, about 12 hours of audio, mostly single runs, with only the key configurations
-  replicated.
-- **Metrics are proxies** (spectral, log-mel, pitch, modulation). Listening judgments are informal, by one listener.
-- **Generated music is phrase-level, not form-level:** it has no long-range structure such as repeats or development, and its
-  dynamics are rule-based.
-- **The composer's style token sees only about 11k notes of cello-suite data**, and character varies by seed. Curation and guards
-  mitigate this but don't eliminate it.
+  reconstruction.

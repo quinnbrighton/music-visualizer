@@ -1,5 +1,0 @@
-file '/home/qbrighto/music-visualizer/v2/report/seg0.mp4'
-file '/home/qbrighto/music-visualizer/v2/report/seg1.mp4'
-file '/home/qbrighto/music-visualizer/v2/report/seg2.mp4'
-file '/home/qbrighto/music-visualizer/v2/report/seg3.mp4'
-file '/home/qbrighto/music-visualizer/v2/report/seg4.mp4'

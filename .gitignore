@@ -3,6 +3,10 @@
 !/.gitignore
 !/README.md
 !/tour.ipynb
+!/run.ipynb
+!/neuralcello/
+!/models/
+!/requirements.txt
 !/docs/
 !/colab/
 /colab/*
@@ -14,6 +18,4 @@
 !/v2/
 /v2/*
 !/v2/*.py
-!/v2/LAB_NOTEBOOK.md
-!/v2/report/
 __pycache__/
