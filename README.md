@@ -262,7 +262,55 @@ few distinct regions of their own.*
 
 The lowest median, B1, is below the cello's range; it comes from pitch-tracker errors and flat low notes in the training audio.
 
-### 3. From curves to latent, and from notes to curves
+### 3. Interpretability: reading the latent, then editing music with it
+
+**Peeling the layers.** Measured directly in the 24-dimensional latent (not in a UMAP picture), the variation peels apart in a clear
+order. I subtracted one factor at a time, removing each group's average, and measured what was left:
+
+| Removed | Variance left | What organizes the remainder |
+|---|---|---|
+| nothing | 100% | the note: 66% of each frame's ten nearest neighbours share its semitone (3% by chance) |
+| pitch | 57% | **loudness**, now a smooth gradient across the whole space |
+| + loudness | 49% | **the recording** (instrument, microphone, room): 37% of neighbours share one (1% by chance) |
+| + recording | 39% | no single label I can measure; diffuse frame-level detail (bow grain, texture) |
+
+![The sound space with pitch subtracted](docs/assets/umap_minus_pitch.png)
+
+*With pitch subtracted, loudness becomes the main axis (right), and frames from the same recording stay close together (middle).*
+
+**Editing music by moving through the latent.** If loudness is a direction in the latent, you can push along it. I fitted that
+direction from the training recordings, using how each frame's latent changes with its loudness once pitch is removed, then added it to
+a performance and decoded the result. The push doesn't act like a volume knob. The decoder rebuilds the sound as if the cellist had
+played harder.
+
+Listen: [the held-out Maisky passage, reconstruction then the loudness push at the same level](docs/assets/audio/11_loudness_push.mp4).
+
+![The latent loudness push across 89 recordings](docs/assets/loudness_push_stats.png)
+
+*Every recording pushed +20 along the loudness direction, then turned back down by exactly the level it gained, so only the way the
+sound is produced differs from its own reconstruction.*
+
+| After removing the level change | Median across 89 recordings | Recordings changing this way |
+|---|---|---|
+| upper harmonics (1–4 kHz) vs fundamentals | **+1.5 dB** | 85 / 89 |
+| level peaks above average (crest) | **−1.1 dB**: more sustained, pressed tone | 80 / 89 |
+| brightness (spectral centroid) | **+10.5%** | 79 / 89 |
+| clarity between harmonics | **−0.7 dB**: more bow noise, scratchier | 72 / 89 |
+| attack sharpness | no change | n/a |
+
+- **The balance of the sound changes.** Energy moves out of the fundamentals below about 125 Hz and into 1–3 kHz, the range where a
+  hard-bowed cello gets its bite, and noise creeps between the harmonics. That is what heavier bow pressure does to a real cello. The
+  codec learned it from the recordings alone; nothing told it what loud playing sounds like.
+- **The level change is limited and consistent.** A +20 push raises the level by a median of 9.8 dB. The decoder won't go much
+  beyond the dynamics it heard in training.
+- **It holds on unseen recordings.** On the 6 held-out recordings the effects point the same way.
+- **Attacks stay the same.** This direction encodes sustained loud tone, not sharper bow strokes; a separate direction would be needed
+  for those.
+
+The same recipe can find other directions: brightness, bow noise, or a performer's recording layer. That makes the latent a set of
+musical controls as well as a compressed code.
+
+### 4. From curves to latent, and from notes to curves
 
 Two **rectified-flow transformers** do the generation. Rectified flow is a diffusion-style model that learns straight paths from noise
 to data, sampled here with a second-order Heun solver.
@@ -283,7 +331,7 @@ Two earlier approaches didn't hold up:
   because the model hedges on *whether* a note gets vibrato. I made that decision explicit: each note gets vibrato with the measured
   probability and a measured shape.
 
-### 4. The composer
+### 5. The composer
 
 A 14.7M-parameter transformer over **meter-aware tokens**:
 - a header for style, time signature and key
