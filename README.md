@@ -147,6 +147,21 @@ I used two kinds of discriminator, as in HiFi-GAN, BigVGAN and DAC:
 A feature-matching loss keeps training stable. The reconstruction losses stay on to hold the shape, while the discriminators
 supply the detail.
 
+![Before and after adversarial training](docs/assets/gan_compare.png)
+
+*The same held-out passage decoded by the codec just before adversarial training and by the final codec.*
+- **Shape (top):** both follow the original's loudness almost equally well, with envelope correlations of 0.95 and 0.96. By that
+  measure the codec before adversarial training already looks finished.
+- **Waveform (middle):** zoomed to 30 ms, the difference is plain. The original's cycles are jagged with fine detail. Before
+  adversarial training they are smoothed toward sine waves, the averaging blur in action. After, the detail is back. It isn't the
+  *same* detail as the original sample for sample, but it is the right kind.
+- **Texture (bottom):** before adversarial training the spectrogram has a regular, combed pattern and smeared note edges. After,
+  the texture and the note ending look like the original's: notes end at −4.6 dB per 10 ms, against −4.7 in the original and −3.7
+  before.
+
+Listen: [before adversarial training](docs/assets/audio/9_before_gan.mp4) · [after](docs/assets/audio/10_after_gan.mp4) ·
+[original](docs/assets/audio/1_original_maisky.mp4).
+
 ![Original vs reconstruction](docs/assets/codec_compare.png)
 
 *Top: waveform. Bottom: spectrogram (time →, frequency ↑, brightness = energy). The stacked lines are harmonics. The reconstruction
