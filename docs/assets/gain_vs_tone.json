@@ -1,0 +1,23 @@
+{
+ "gain_norm_per_db": 0.20865695178508759,
+ "gain_consistency_cos": 0.9960157871246338,
+ "cos_loudness_gain": 0.9283649921417236,
+ "gain direction x10 dB": {
+  "level_db": 5.81381368637085,
+  "upper_db": 1.161067008972168,
+  "low_db": -0.5599327087402344,
+  "centroid": 13.37793212267411
+ },
+ "tone direction (same length as a +20 loudness push's tonal part)": {
+  "level_db": 1.0934339761734009,
+  "upper_db": 1.4631242752075195,
+  "low_db": -1.878387451171875,
+  "centroid": 28.135551713787322
+ },
+ "learned loudness direction x20": {
+  "level_db": 7.723836898803711,
+  "upper_db": 3.2430009841918945,
+  "low_db": -2.445145606994629,
+  "centroid": 71.14146851707955
+ }
+}

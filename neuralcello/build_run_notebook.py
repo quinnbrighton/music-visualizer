@@ -12,7 +12,7 @@ Everything below runs from the weights in `models/` (about 125 MB, already in th
 1. **Compose** a new melody in a chosen key, meter and style.
 2. **Perform** it: notes → expressive pitch and loudness curves → the codec's latent → audio.
 3. **Reconstruct** a real recording through the 24-number-per-frame code.
-4. **Edit** the recording by pushing along the latent's loudness direction.
+4. **Edit** the recording through the latent: loudness, then volume and bowing effort separately.
 """)
 code("""
 # In Colab or a fresh environment, uncomment:
@@ -61,6 +61,18 @@ rms = lambda v: np.sqrt(np.mean(v ** 2))
 print(f"the push raised the level by {20 * np.log10(rms(pushed) / rms(y)):.1f} dB; both clips below are played at the same level")
 pushed = pushed / rms(pushed) * rms(y)
 display(Audio(y, rate=SR), Audio(pushed, rate=SR))
+""")
+md("""
+The loudness direction mixes two controls, which the repo also ships separately: a pure **volume** axis
+(`models/gain_direction.npy`, latent change per dB) and an **effort** axis (`models/tone_direction.npy`, how hard the bow digs in,
+at almost constant level). Try them on their own:
+""")
+code("""
+vol, effort = np.load("models/gain_direction.npy"), np.load("models/tone_direction.npy")
+louder = m.decode(z + 6 * vol)                     # about 6 dB on the encoder's volume axis: louder, same playing
+harder = m.decode(z + 60 * effort); harder = harder / rms(harder) * rms(y)   # heavier bow at the same level
+softer = m.decode(z - 60 * effort); softer = softer / rms(softer) * rms(y)   # lighter bow, darker tone
+display(Audio(louder, rate=SR), Audio(harder, rate=SR), Audio(softer, rate=SR))
 """)
 md("""
 ## Also from the command line

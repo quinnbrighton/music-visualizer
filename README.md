@@ -337,7 +337,27 @@ sound is produced differs from its own reconstruction.*
 - **Attacks stay the same.** This direction encodes sustained loud tone, not sharper bow strokes; a separate direction would be needed
   for those.
 
-The same recipe can find other directions: brightness, bow noise, or a performer's recording layer. That makes the latent a set of
+**Separating volume from effort.** In real playing, louder also means bowed harder, so the loudness direction above mixes two
+things. To pull them apart I re-encoded the same recordings turned up and down: the latent moved along one fixed **volume axis**,
+the same for all 33 recordings tested (cosine 1.00). The loudness direction turns out to be 86% that volume axis. The remaining 14%,
+with volume removed, is an **effort axis**: how the note is bowed, independent of how loud it is.
+
+![Volume and effort as independent controls](docs/assets/volume_vs_effort.png)
+
+| Pushing… | moves the level | moves the tone (upper harmonics vs fundamentals) | moves the pitch |
+|---|---|---|---|
+| **volume** | **90%** of the level changes in the grid | 4% of the tone changes | no |
+| **effort** | 9% | **96%** | no (0 cents) |
+
+The codec learned the difference between a sound engineer's fader and a cellist's bow from audio alone, and each can be turned
+independently. Effort at +60 moves energy out of the fundamentals (−8 dB below 125 Hz) into the core harmonics (+4.5 dB at 1–4
+kHz), like digging in with the bow near the bridge; −60 does the opposite, a darker, rounder tone like playing over the
+fingerboard.
+
+Listen: [volume only (−10, as decoded, +10)](docs/assets/audio/13_volume_only.mp4) ·
+[effort only at matched level (−60, as decoded, +60)](docs/assets/audio/14_effort_only.mp4).
+
+The same recipe can find other directions, such as bow noise or a performer's recording layer. That makes the latent a set of
 musical controls as well as a compressed code.
 
 ### 4. From curves to latent, and from notes to curves
@@ -392,7 +412,7 @@ Everything here trains locally on a single RTX 3060 (12 GB). For speed I optiona
 | [`run.ipynb`](run.ipynb) | Run every model yourself: compose, perform, reconstruct, edit through the latent |
 | [`tour.ipynb`](tour.ipynb) | Guided, plain-language tour of the results, with audio |
 | `neuralcello/` | Inference package (codec, latent flow model, performance model, composer); no training code or data needed |
-| `models/` | Trained weights (fp16, about 125 MB) and the latent loudness direction |
+| `models/` | Trained weights (fp16, about 125 MB) and the latent editing directions (loudness, volume, effort) |
 | [`docs/TECHNICAL.md`](docs/TECHNICAL.md) | Full write-up: every design decision, its measurement and the literature behind it |
 | [`docs/REFERENCES.md`](docs/REFERENCES.md) | Papers used, by stage |
 | `colab/cello_gan/` | Training and analysis: codec (`train_gan.py`, `train_rvq.py`, `train_reg.py`), flow models (`train_lat.py`, `train_curve.py`), composer (`train_symlm.py`), figure scripts (`make_*.py`) |
