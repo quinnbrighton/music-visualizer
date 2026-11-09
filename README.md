@@ -236,6 +236,20 @@ different neighbourhood: pitch and register organize the space.
 
 </details>
 
+**The pitch path.** For every semitone I took the median map position of all its training frames and joined them in pitch order.
+
+![The pitch path through the sound space](docs/assets/umap_pitch_path.png)
+
+- **The space snakes by register.** From D3 upward the path sweeps steadily across the whole map, with the highest notes at the
+  far end, so register is the main axis of the sound space.
+- **The bottom octave is a knot.** Below D3, neighbouring semitones jump around inside one region. Down there, what changes the
+  sound most is tone colour and bowing, not the note.
+- **Big steps line up with the instrument.** Two of the largest steps land on open strings, D3 and A3. An open string rings
+  without a finger stopping it, so it sounds noticeably different from the stopped notes around it. The codec learned that from
+  audio alone.
+
+The lowest point, B1, is below the cello's range; it comes from pitch-tracker errors and flat low notes in the training audio.
+
 ### 3. From curves to latent, and from notes to curves
 
 Two **rectified-flow transformers** do the generation. Rectified flow is a diffusion-style model that learns straight paths from noise

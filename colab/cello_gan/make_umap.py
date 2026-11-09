@@ -31,6 +31,32 @@ def base(ax):
     ax.set_xticks([]); ax.set_yticks([]); return sc
 
 
+# the pitch path: median position of every semitone (training frames), traced in pitch order through the map
+NAMES = ["C", "C#", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"]; Pr = np.round(P).astype(int)
+semis = [s_ for s_ in range(Pr.min(), Pr.max() + 1) if (Pr == s_).sum() >= 100]
+med = np.array([np.median(xy[Pr == s_], 0) for s_ in semis]); semis = np.array(semis)
+gap = np.r_[0, np.linalg.norm(np.diff(med, axis=0), axis=1)]               # map distance from the previous semitone
+fig = plt.figure(figsize=(11, 8.6)); ax = fig.add_axes([0.04, 0.3, 0.92, 0.64]); ax2 = fig.add_axes([0.07, 0.06, 0.88, 0.17])
+ax.scatter(xy[:, 0], xy[:, 1], c=P, cmap="Blues", vmin=np.percentile(P, 2) - 8, vmax=np.percentile(P, 99), s=2, lw=0, alpha=0.35, rasterized=True)
+from matplotlib.collections import LineCollection; from matplotlib.colors import LinearSegmentedColormap as LSC; pcm = LSC.from_list("p", ["#f6b48f", "#eb6834", "#7a2508"])
+lc = LineCollection(np.stack([med[:-1], med[1:]], 1), cmap=pcm, linewidths=2.4, zorder=3); lc.set_array(semis[:-1].astype(float)); ax.add_collection(lc)
+ax.scatter(med[:, 0], med[:, 1], c=semis, cmap=pcm, s=26, edgecolor=BG, lw=1, zorder=4)
+OPEN = {36: "C string", 43: "G string", 50: "D string", 57: "A string"}
+for s_, (x_, y_) in zip(semis, med):
+    if s_ % 12 == 0 or s_ in OPEN:
+        off = {36: (-60, 10), 43: (-30, 12), 48: (10, 4), 50: (10, -14), 57: (10, -4)}.get(s_, (8, 6))
+        ax.annotate("%s%d" % (NAMES[s_ % 12], s_ // 12 - 1) + ("  (open %s)" % OPEN[s_] if s_ in OPEN else ""), (x_, y_), textcoords="offset points",
+                    xytext=off, fontsize=9, weight="bold", color="#0b0b0b", zorder=5, bbox=dict(boxstyle="round,pad=0.15", fc=BG, ec="none", alpha=0.8))
+ax.annotate("lowest", med[0], textcoords="offset points", xytext=(-10, -14), fontsize=8.5, color=INK2); ax.annotate("highest", med[-1], textcoords="offset points", xytext=(6, -12), fontsize=8.5, color=INK2)
+ax.set_xticks([]); ax.set_yticks([]); ax.set_title("The pitch path: where each semitone sits in the sound space, traced from the lowest note to the highest", loc="left")
+ax2.bar(semis, gap, width=0.8, color=[ORANGE if s_ in OPEN else "#2a78d6" for s_ in semis], alpha=0.85)
+for s_ in OPEN: ax2.axvline(s_ - 0.5, color=GRID, lw=1, zorder=0)
+ax2.set_xticks([s_ for s_ in semis if s_ % 12 == 0 or s_ in OPEN]); ax2.set_xticklabels(["%s%d" % (NAMES[s_ % 12], s_ // 12 - 1) for s_ in semis if s_ % 12 == 0 or s_ in OPEN])
+ax2.set_ylabel("step on the map"); ax2.set_title("How far each semitone moves from the one below (orange: open strings)", loc="left", fontsize=10)
+fig.text(0.04, 0.005, "Median map position of all training frames at each semitone (at least 100 frames); same UMAP as the figures above.", color=INK2, fontsize=8.5)
+fig.savefig(f"{OUTD}/umap_pitch_path.png", dpi=110); plt.close(fig)
+for s_, g_ in zip(semis, gap): print("%s%d %4d frames step %.2f" % (NAMES[s_ % 12], s_ // 12 - 1, (Pr == s_).sum(), g_))
+
 # static picture: the whole passage, coloured from early (light) to late (dark orange)
 fig, ax = plt.subplots(figsize=(8, 6.4)); sc = base(ax); tt = np.arange(len(xt)) / 25
 from matplotlib.colors import LinearSegmentedColormap; tcm = LinearSegmentedColormap.from_list("t", ["#f6b48f", "#8a2f0c"])
