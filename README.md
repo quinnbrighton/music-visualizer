@@ -241,6 +241,10 @@ saturation the pitch tracker's confidence. Large dots mark the median position o
 
 ![Every frame coloured by its note](docs/assets/umap_pitch_path.png)
 
+![The sound space in 3D, spinning](docs/assets/umap3d_spin.gif)
+
+*The same colouring on a 3D UMAP of the same frames. The note islands keep their shape from every side. [Higher quality video](docs/assets/audio/umap3d_spin.mp4).*
+
 - **Each note forms its own islands.** The latent was never told note names, but frames of the same note cluster together.
 - **The space snakes by register.** Following the medians from D3 upward, the notes sweep across the whole map toward the highest
   notes at the far left. Below D3 they knot together in one region: down there, tone colour and bowing change the sound more than
