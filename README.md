@@ -211,8 +211,7 @@ important channels and amplified noisy ones. Disentanglement and sound-space iso
 
 *The same causal predictor, trained the same way on each codec's latents, trying to predict the next frame of the held-out passage
 from the previous 1.8 s. The old latent spikes unpredictably throughout. The regularized latent stays low: 9% unexplained on this
-passage against 21%, the same halving as the 11.4% to 5.4% measured over the full test set. What's left is concentrated in the
-moments that really are new, such as note changes and bow attacks.*
+passage against 21%, the same halving as the 11.4% to 5.4% measured over the full test set.*
 
 ![What each channel does](docs/assets/channel_knobs.png)
 
