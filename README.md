@@ -219,11 +219,6 @@ passage against 21%, the same halving as the 11.4% to 5.4% measured over the ful
 mostly adds bow noise and air. Most other channels mix loudness and tone colour. That is expected: I regularized for equal-sized
 effects (isometry), not for one meaning per channel (disentanglement).*
 
-![The same passage with one channel pushed at a time](docs/assets/channel_spectrograms.png)
-
-*The same pushes as spectrograms, on one colour scale. Pushing channel 6 lifts everything above about 4 kHz, the bow noise and air;
-channel 9 shifts the harmonics; channel 1 moves energy toward the middle of the spectrum.*
-
 ![The embedding](docs/assets/embedding.png)
 
 *Left: 40 s of music projected to 2D with PCA, coloured by pitch. Right: all 24 channels over time.*

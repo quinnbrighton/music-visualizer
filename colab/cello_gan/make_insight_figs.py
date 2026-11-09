@@ -63,7 +63,7 @@ for c in range(ZD):
     eff[c] = [b1["pitch"] - b0["pitch"], b1["loud"] - b0["loud"], 1200 * (b1["bright"] - b0["bright"]) / 1200 * 100, b1["air"] - b0["air"]]
 units = ["pitch (cents)", "loudness (dB)", "brightness (% centroid)", "bow noise / air (dB above 4 kHz)"]
 eff[:, 2] = 100 * (2 ** (eff[:, 2] / 100) - 1)                                                              # log2 ratio x100 -> percent change
-fig = plt.figure(figsize=(12, 8.6)); gs = fig.add_gridspec(2, 2, height_ratios=[1.25, 1], hspace=0.5, wspace=0.15)
+fig = plt.figure(figsize=(12, 8.6)); gs = fig.add_gridspec(2, 3, height_ratios=[1.25, 1], hspace=0.5, wspace=0.12)
 ax = fig.add_subplot(gs[0, :]); En = eff / np.abs(eff).max(0)
 ax.imshow(En.T, aspect="auto", cmap="RdBu_r", vmin=-1, vmax=1, interpolation="nearest")
 ax.set_yticks(range(4)); ax.set_yticklabels(units); ax.set_xticks(range(ZD)); ax.set_xlabel("latent channel")
@@ -72,35 +72,18 @@ for c in range(ZD):
         if abs(En[c, j]) > 0.35: ax.text(c, j, "%+.0f" % eff[c, j] if abs(eff[c, j]) >= 10 else "%+.1f" % eff[c, j], ha="center", va="center", fontsize=7, color="white" if abs(En[c, j]) > 0.7 else INK)
 ax.set_title("What each channel does: the same push on every channel, and how the decoded sound changes", loc="left")
 picks = []
-for j in (0, 3):                                                         # strongest channel for pitch, brightness, air, each channel used once
+for j in (0, 2, 3):                                                         # strongest channel for pitch, brightness, air, each channel used once
     o = np.argsort(-np.abs(eff[:, j])); picks.append(int(next(c for c in o if c not in picks)))
-labels = ["pitch", "bow noise / air (and quieter overall)"]
-_, ps = dec(z0 + 0)                                                         # pitch track of the base decode
-def avg_spec(y): f, P = ss.welch(y, SR, nperseg=4096); return f, 10 * np.log10(P + 1e-14)
+labels = ["pitch", "brightness", "bow noise / air"]
+f, t, S0d = ss.stft(y0, SR, nperseg=2048, noverlap=1536); B = 20 * np.log10(np.abs(S0d) + 1e-6); mm = f <= 8000
 for i, (c, lab) in enumerate(zip(picks, labels)):
-    a3 = fig.add_subplot(gs[1, i])
-    if i == 0:
-        z1 = z0.clone(); z1[:, c] += step; _, p1 = dec(z1); tt = np.arange(len(p0)) / 100
-        cen = lambda p: np.where(p > 40, 1200 * np.log2(np.clip(p, 40, None) / 440) / 100 + 69, np.nan)
-        a3.plot(tt, cen(p0), color=INK2, lw=1.4, label="as decoded"); a3.plot(tt, cen(p1), color=BLUE, lw=1.4, label="channel %d pushed" % c)
-        a3.set_xlabel("seconds"); a3.set_ylabel("pitch (MIDI)")
-    else:
-        f, B = avg_spec(y0); _, P1 = avg_spec(ys[c]); mm = (f > 300) & (f < 10500); sm = lambda v: np.convolve(np.pad(v, 7, mode="edge"), np.ones(15) / 15, "valid")
-        a3.plot(f[mm] / 1000, sm(B[mm]), color=INK2, lw=1.4, label="as decoded"); a3.plot(f[mm] / 1000, sm(P1[mm]), color=BLUE, lw=1.4, label="channel %d pushed" % c)
-        a3.set_xlabel("kHz"); a3.set_ylabel("average level (dB)"); a3.set_yticks([])
-    a3.set_title("channel %d: mostly %s" % (c, lab), loc="left", fontsize=10); a3.legend(frameon=False, fontsize=8.5)
-fig.text(0.125, 0.43, "Two channels up close: pitch lives in a few channels; most others mix loudness and tone colour", fontsize=10.5, weight="bold")
+    _, _, S1 = ss.stft(ys[c], SR, nperseg=2048, noverlap=1536); D = 20 * np.log10(np.abs(S1) + 1e-6) - B
+    a3 = fig.add_subplot(gs[1, i]); a3.pcolormesh(t, f[mm] / 1000, D[mm], shading="auto", cmap="RdBu_r", vmin=-15, vmax=15)
+    a3.set_title("channel %d: mostly %s" % (c, lab), loc="left", fontsize=10); a3.set_xlabel("seconds")
+    if i == 0: a3.set_ylabel("kHz")
+    else: a3.set_yticks([])
+fig.text(0.125, 0.43, "Change in the spectrogram when one channel is pushed (red = louder, blue = quieter)", fontsize=10.5, weight="bold")
 fig.text(0.01, 0.01, "Final codec, 2 s of the held-out passage, every channel pushed by the same 1.5 latent SDs. Heatmap colours are scaled per row; numbers show the size of the larger effects.", color=INK2, fontsize=8.5)
 fig.savefig(f"{OUTD}/channel_knobs.png", dpi=110, bbox_inches="tight"); plt.close(fig); print("wrote channel_knobs.png", "| picks", picks)
 np.set_printoptions(precision=1, suppress=True); print(eff)
 
-# 3b. the same pushes heard as spectrograms: as decoded, then the pitch, brightness and bow-noise channels pushed
-show = [(None, "as decoded")] + [(c, "channel %d pushed: %s" % (c, lab)) for c, lab in ((picks[0], "pitch +38 cents"), (1, "brightness, centroid +35%"), (picks[1], "bow noise / air +7.8 dB"))]
-fig, axs = plt.subplots(1, 4, figsize=(14, 4), sharey=True); vmax = None
-for ax, (c, lab) in zip(axs, show):
-    y = y0 if c is None else ys[c]; f, t, Sd = ss.stft(y, SR, nperseg=1024, noverlap=896); S_ = 20 * np.log10(np.abs(Sd) + 1e-6); mm = f <= 8000
-    vmax = S_[mm].max() if vmax is None else vmax
-    ax.pcolormesh(t, f[mm] / 1000, S_[mm], shading="auto", cmap="magma", vmin=vmax - 80, vmax=vmax); ax.set_title(lab, loc="left", fontsize=10); ax.set_xlabel("seconds")
-axs[0].set_ylabel("kHz")
-fig.suptitle("The same 2 s decoded with one channel pushed at a time (same push size, same colour scale)", x=0.01, ha="left", fontsize=11, weight="bold")
-fig.tight_layout(); fig.savefig(f"{OUTD}/channel_spectrograms.png", dpi=110); plt.close(fig); print("wrote channel_spectrograms.png")
