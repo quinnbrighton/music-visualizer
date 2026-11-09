@@ -14,12 +14,12 @@ plt.rcParams.update({"figure.facecolor": BG, "axes.facecolor": BG, "axes.edgecol
 def midi_of(c): return np.where(c[:, 1] > 0.5, 69 + 12 * np.log2(np.clip(c[:, 0], 40, 1200) / 440), np.nan)
 
 
-rng = np.random.default_rng(0); Z, P = [], []                              # ~600 voiced frames from each training recording
+rng = np.random.default_rng(0); Z, P, CF = [], [], []                              # ~600 voiced frames from each training recording
 for t in sp["train"]:
     if not os.path.exists(f"{LAT}/{t}.npy"): continue
-    z = np.load(f"{LAT}/{t}.npy").astype(np.float32); m = midi_of(np.load(f"{CTL}/{t}.npy")); n = min(len(z), len(m)); ok = np.flatnonzero(~np.isnan(m[:n]))
-    pick = rng.choice(ok, min(600, len(ok)), replace=False); Z.append(z[pick]); P.append(m[pick])
-Z, P = np.concatenate(Z), np.concatenate(P)
+    z = np.load(f"{LAT}/{t}.npy").astype(np.float32); cc = np.load(f"{CTL}/{t}.npy"); m = midi_of(cc); n = min(len(z), len(m)); ok = np.flatnonzero(~np.isnan(m[:n]))
+    pick = rng.choice(ok, min(600, len(ok)), replace=False); Z.append(z[pick]); P.append(m[pick]); CF.append(cc[pick, 1])
+Z, P, CF = np.concatenate(Z), np.concatenate(P), np.concatenate(CF)          # CF: pitch tracker's voicing confidence (0.5-1 for pitched frames)
 zt = np.load(f"{LAT}/{k}.npy").astype(np.float32)[f0: f0 + int(SEC * 25)]; pt = midi_of(np.load(f"{CTL}/{k}.npy"))[f0: f0 + int(SEC * 25)]
 mu, sd = Z.mean(0), Z.std(0); red = umap.UMAP(n_neighbors=30, min_dist=0.15, random_state=0).fit((Z - mu) / sd)
 xy, xt = red.embedding_, red.transform((zt - mu) / sd)                     # test frames are only placed, never used to fit
@@ -36,25 +36,46 @@ NAMES = ["C", "C#", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"]; Pr = 
 semis = [s_ for s_ in range(Pr.min(), Pr.max() + 1) if (Pr == s_).sum() >= 100]
 med = np.array([np.median(xy[Pr == s_], 0) for s_ in semis]); semis = np.array(semis)
 gap = np.r_[0, np.linalg.norm(np.diff(med, axis=0), axis=1)]               # map distance from the previous semitone
-fig = plt.figure(figsize=(11, 8.6)); ax = fig.add_axes([0.04, 0.3, 0.92, 0.64]); ax2 = fig.add_axes([0.07, 0.06, 0.88, 0.17])
-ax.scatter(xy[:, 0], xy[:, 1], c=P, cmap="Blues", vmin=np.percentile(P, 2) - 8, vmax=np.percentile(P, 99), s=2, lw=0, alpha=0.35, rasterized=True)
-from matplotlib.collections import LineCollection; from matplotlib.colors import LinearSegmentedColormap as LSC; pcm = LSC.from_list("p", ["#f6b48f", "#eb6834", "#7a2508"])
-lc = LineCollection(np.stack([med[:-1], med[1:]], 1), cmap=pcm, linewidths=2.4, zorder=3); lc.set_array(semis[:-1].astype(float)); ax.add_collection(lc)
-ax.scatter(med[:, 0], med[:, 1], c=semis, cmap=pcm, s=26, edgecolor=BG, lw=1, zorder=4)
+import colorsys
+def note_col(m, alpha=1.0, conf=None):                                      # hue = pitch class (rainbow), lightness = octave, saturation = pitch confidence
+    m = np.asarray(m, float); pc = np.mod(np.round(m), 12); octv = np.floor(np.round(m) / 12) - 1
+    L = np.clip(0.22 + 0.13 * (octv - 1), 0.18, 0.8); S = np.full(len(m), 0.9) if conf is None else np.clip((np.asarray(conf) - 0.5) / 0.45, 0, 1) * 0.9 + 0.05
+    return np.array([(*colorsys.hls_to_rgb(h / 12, l, s_), alpha) for h, l, s_ in zip(pc, L, S)])
+fig = plt.figure(figsize=(11, 8.6)); ax = fig.add_axes([0.04, 0.3, 0.78, 0.64]); ax2 = fig.add_axes([0.07, 0.06, 0.88, 0.17]); axl = fig.add_axes([0.84, 0.5, 0.14, 0.3])
+o_ = np.argsort(CF); ax.scatter(xy[o_, 0], xy[o_, 1], c=note_col(P[o_], 0.45, CF[o_]), s=2.5, lw=0, rasterized=True)   # confident frames drawn last
+ax.scatter(med[:, 0], med[:, 1], c=note_col(semis), s=70, edgecolor="#0b0b0b", lw=1, zorder=4)
 OPEN = {36: "C string", 43: "G string", 50: "D string", 57: "A string"}
 for s_, (x_, y_) in zip(semis, med):
     if s_ % 12 == 0 or s_ in OPEN:
         off = {36: (-60, 10), 43: (-30, 12), 48: (10, 4), 50: (10, -14), 57: (10, -4)}.get(s_, (8, 6))
         ax.annotate("%s%d" % (NAMES[s_ % 12], s_ // 12 - 1) + ("  (open %s)" % OPEN[s_] if s_ in OPEN else ""), (x_, y_), textcoords="offset points",
                     xytext=off, fontsize=9, weight="bold", color="#0b0b0b", zorder=5, bbox=dict(boxstyle="round,pad=0.15", fc=BG, ec="none", alpha=0.8))
-ax.annotate("lowest", med[0], textcoords="offset points", xytext=(-10, -14), fontsize=8.5, color=INK2); ax.annotate("highest", med[-1], textcoords="offset points", xytext=(6, -12), fontsize=8.5, color=INK2)
-ax.set_xticks([]); ax.set_yticks([]); ax.set_title("The pitch path: where each semitone sits in the sound space, traced from the lowest note to the highest", loc="left")
+ax.set_xticks([]); ax.set_yticks([]); ax.set_title("Every frame coloured by its note: hue = note name, brightness = octave, saturation = pitch confidence", loc="left")
+octs = list(range(int(np.floor(semis.min() / 12)) - 1, int(np.floor(semis.max() / 12))))
+grid = np.array([[note_col([12 * (o + 1) + pc])[0] for pc in range(12)] for o in octs])
+axl.imshow(grid, aspect="auto", origin="lower", interpolation="nearest"); axl.set_xticks(range(12)); axl.set_xticklabels(NAMES, fontsize=7, rotation=90)
+axl.set_yticks(range(len(octs))); axl.set_yticklabels(["octave %d" % o for o in octs], fontsize=7.5); axl.set_title("key (full confidence)", loc="left", fontsize=9)
 ax2.bar(semis, gap, width=0.8, color=[ORANGE if s_ in OPEN else "#2a78d6" for s_ in semis], alpha=0.85)
 for s_ in OPEN: ax2.axvline(s_ - 0.5, color=GRID, lw=1, zorder=0)
 ax2.set_xticks([s_ for s_ in semis if s_ % 12 == 0 or s_ in OPEN]); ax2.set_xticklabels(["%s%d" % (NAMES[s_ % 12], s_ // 12 - 1) for s_ in semis if s_ % 12 == 0 or s_ in OPEN])
 ax2.set_ylabel("step on the map"); ax2.set_title("How far each semitone moves from the one below (orange: open strings)", loc="left", fontsize=10)
-fig.text(0.04, 0.005, "Median map position of all training frames at each semitone (at least 100 frames); same UMAP as the figures above.", color=INK2, fontsize=8.5)
+fig.text(0.04, 0.005, "Large dots: median map position of all training frames at each semitone (at least 100 frames). Same UMAP as the figures above.", color=INK2, fontsize=8.5)
 fig.savefig(f"{OUTD}/umap_pitch_path.png", dpi=110); plt.close(fig)
+# black / white alternating by semitone, grey for frames with no identifiable pitch (placed on the same map, not used to fit it)
+Zu = []
+for t in sp["train"]:
+    if not os.path.exists(f"{LAT}/{t}.npy"): continue
+    z = np.load(f"{LAT}/{t}.npy").astype(np.float32); m = midi_of(np.load(f"{CTL}/{t}.npy")); n = min(len(z), len(m)); un = np.flatnonzero(np.isnan(m[:n]))
+    if len(un): Zu.append(z[rng.choice(un, min(150, len(un)), replace=False)])
+xu = red.transform((np.concatenate(Zu) - mu) / sd)
+fig, ax = plt.subplots(figsize=(11, 7.6)); MID = "#5b7db1"; fig.patch.set_facecolor(BG); ax.set_facecolor(MID)
+odd = (Pr % 2).astype(bool); ax.scatter(xy[~odd, 0], xy[~odd, 1], color="#0b0b0b", s=2.5, lw=0, alpha=0.75, rasterized=True)
+ax.scatter(xy[odd, 0], xy[odd, 1], color="#ffffff", s=2.5, lw=0, alpha=0.75, rasterized=True)
+ax.scatter(xu[:, 0], xu[:, 1], color="#b8b8b8", s=3, lw=0, alpha=0.9, rasterized=True)   # unpitched frames on top so they stay visible
+ax.set_xticks([]); ax.set_yticks([]); [sp_.set_visible(False) for sp_ in ax.spines.values()]
+ax.set_title("Neighbouring semitones in alternating black and white; grey = no identifiable pitch", loc="left")
+fig.text(0.02, 0.01, "Same UMAP as above. %d pitched frames (C, D, E, F#, G#, A# black; C#, D#, F, G, A, B white) and %d unpitched frames placed onto the map." % (len(xy), len(xu)), color=INK2, fontsize=8.5)
+fig.tight_layout(); fig.savefig(f"{OUTD}/umap_semitones_bw.png", dpi=110); plt.close(fig); print("wrote umap_semitones_bw.png")
 for s_, g_ in zip(semis, gap): print("%s%d %4d frames step %.2f" % (NAMES[s_ % 12], s_ // 12 - 1, (Pr == s_).sum(), g_))
 
 # static picture: the whole passage, coloured from early (light) to late (dark orange)

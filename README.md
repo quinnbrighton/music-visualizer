@@ -236,19 +236,26 @@ different neighbourhood: pitch and register organize the space.
 
 </details>
 
-**The pitch path.** For every semitone I took the median map position of all its training frames and joined them in pitch order.
+**Where each note lives.** The same map with every frame coloured by its note: hue is the note name, brightness the octave, and
+saturation the pitch tracker's confidence. Large dots mark the median position of each semitone.
 
-![The pitch path through the sound space](docs/assets/umap_pitch_path.png)
+![Every frame coloured by its note](docs/assets/umap_pitch_path.png)
 
-- **The space snakes by register.** From D3 upward the path sweeps steadily across the whole map, with the highest notes at the
-  far end, so register is the main axis of the sound space.
-- **The bottom octave is a knot.** Below D3, neighbouring semitones jump around inside one region. Down there, what changes the
-  sound most is tone colour and bowing, not the note.
-- **Big steps line up with the instrument.** Two of the largest steps land on open strings, D3 and A3. An open string rings
-  without a finger stopping it, so it sounds noticeably different from the stopped notes around it. The codec learned that from
-  audio alone.
+- **Each note forms its own islands.** The latent was never told note names, but frames of the same note cluster together.
+- **The space snakes by register.** Following the medians from D3 upward, the notes sweep across the whole map toward the highest
+  notes at the far left. Below D3 they knot together in one region: down there, tone colour and bowing change the sound more than
+  the note does.
+- **Big steps line up with the instrument.** The bar chart shows how far each semitone's median sits from the one below. Two of the
+  largest steps land on open strings, D3 and A3. An open string rings without a finger stopping it, so it sounds different from the
+  stopped notes around it.
 
-The lowest point, B1, is below the cello's range; it comes from pitch-tracker errors and flat low notes in the training audio.
+![Neighbouring semitones in alternating black and white](docs/assets/umap_semitones_bw.png)
+
+*The same map with neighbouring semitones in alternating black and white. The stripes show the snake directly: every step up in
+pitch moves to the next band. Grey frames have no identifiable pitch (bow noise, attacks, silence between notes); they gather in a
+few distinct regions of their own.*
+
+The lowest median, B1, is below the cello's range; it comes from pitch-tracker errors and flat low notes in the training audio.
 
 ### 3. From curves to latent, and from notes to curves
 
