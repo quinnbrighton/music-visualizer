@@ -1,0 +1,19 @@
+# Whitelist: the folder holds ~68 GB of data, checkpoints and renders; only the showcase and code are tracked.
+/*
+!/.gitignore
+!/README.md
+!/tour.ipynb
+!/docs/
+!/colab/
+/colab/*
+!/colab/cello_gan/
+/colab/cello_gan/*
+!/colab/cello_gan/*.py
+!/colab/cello_gan/*.sh
+!/colab/cello_gan/README.txt
+!/v2/
+/v2/*
+!/v2/*.py
+!/v2/LAB_NOTEBOOK.md
+!/v2/report/
+__pycache__/

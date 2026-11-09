@@ -1,0 +1,714 @@
+{
+ "a0db93d74c12_15131904": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/mgeqeZbWDek.wav",
+  "youtube_id": "mgeqeZbWDek",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=mgeqeZbWDek",
+  "title": "Gautier Capu\u00e7on plays J.S. Bach: Cello Suite No. 1 in G Major, BWV 1007: I. Prelude",
+  "channel": "Warner Classics"
+ },
+ "8831163037f0_52920398": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/9I03mvgFTWw.wav",
+  "youtube_id": "9I03mvgFTWw",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=9I03mvgFTWw",
+  "title": "Zolt\u00e1n Kod\u00e1ly - Sonata for Solo 'Cello, Op.8 (1915) [Score-Video]",
+  "channel": "George N. Gianopoulos, composer"
+ },
+ "4eed7f228c79_19609680": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/zEvtQwQMPrs.wav",
+  "youtube_id": "zEvtQwQMPrs",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=zEvtQwQMPrs",
+  "title": "Ysa\u00ffe Sonata for solo cello in C minor op. 28 | Oleksiy Shadrin \u2013 Queen Elisabeth Competition 2022",
+  "channel": "Queen Elisabeth Competition"
+ },
+ "df8d6288d255_52920398": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/Rnp-CLlC9S0.wav",
+  "youtube_id": "Rnp-CLlC9S0",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=Rnp-CLlC9S0",
+  "title": "Max Reger - Suite No.3 for Solo Cello, Op. 131c (Paul Kang)",
+  "channel": "Paul Kang"
+ },
+ "0060e29006ad_52920398": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/gouDKE176HQ.wav",
+  "youtube_id": "gouDKE176HQ",
+  "role": "val",
+  "url": "https://www.youtube.com/watch?v=gouDKE176HQ",
+  "title": "Daniel M\u00fcller-Schott plays Bernd Alois Zimmermann - Sonata for Cello Solo 1960 - Live Recording",
+  "channel": "Daniel M\u00fcller-Schott"
+ },
+ "a66a13ceef8d_52920398": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/CKwIlT6MNAs.wav",
+  "youtube_id": "CKwIlT6MNAs",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=CKwIlT6MNAs",
+  "title": "Zoltan Kodaly-Sonata for Cello Solo op. 8 (Complete)",
+  "channel": "viool7"
+ },
+ "eff108d7598f_43218044": {
+  "file": "/home/qbrighto/music-visualizer/cleaned/cello_dataset/EoWXHjra_s0.wav",
+  "youtube_id": "EoWXHjra_s0",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=EoWXHjra_s0",
+  "title": "Hindemith Sonata for Solo Cello, Op.25, No.3",
+  "channel": "batcello"
+ },
+ "2f878f81ff32_74892332": {
+  "file": "/home/qbrighto/music-visualizer/cleaned/cello_dataset/Nu9MDqGhIak.wav",
+  "youtube_id": "Nu9MDqGhIak",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=Nu9MDqGhIak",
+  "title": "Yo Yo Ma - Bach Six Cello Suites - BBC Proms 2015",
+  "channel": "Abraham Wu"
+ },
+ "eea5a8eebaa3_115212366": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/tDyUCK7K0mE.wav",
+  "youtube_id": "tDyUCK7K0mE",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=tDyUCK7K0mE",
+  "title": "KODALY Solo Sonata, Jakob Koranyi - Cello",
+  "channel": "Jakob Koranyi"
+ },
+ "f0ec6f195096_18587728": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/LwgBu9x4oHo.wav",
+  "youtube_id": "LwgBu9x4oHo",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=LwgBu9x4oHo",
+  "title": "Dr. Adam Riggs - 'Encore #24 for Solo Cello'",
+  "channel": "RockleyMusicEdCenter"
+ },
+ "3b69122d072b_24034662": {
+  "file": "/home/qbrighto/music-visualizer/cleaned/cello_dataset/1P7_GdKuqE8.wav",
+  "youtube_id": "1P7_GdKuqE8",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=1P7_GdKuqE8",
+  "title": "Ysa\u00ffe: Sonata for Solo Cello, Op. 28: I. | Christine J. Lee, cello",
+  "channel": "Heifetz International Music Institute"
+ },
+ "4a269116c651_52919472": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/OGfeHYyzVtY.wav",
+  "youtube_id": "OGfeHYyzVtY",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=OGfeHYyzVtY",
+  "title": "Haydn: 1. Cellokonzert C-Dur \u2219 hr-Sinfonieorchester \u2219 Steven Isserlis \u2219 Richard Egarr",
+  "channel": "hr-Sinfonieorchester \u2013 Frankfurt Radio Symphony"
+ },
+ "ac0b2de8fcc2_52919472": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/xGWe2xlvfLs.wav",
+  "youtube_id": "xGWe2xlvfLs",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=xGWe2xlvfLs",
+  "title": "Johann Sebastian Bach - Suite no. 1 in G Major | Jean-Guihen Queyras | Cello Biennale Amsterdam",
+  "channel": "Cello Biennale Amsterdam"
+ },
+ "4623cdde9aa6_31803472": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/EG_uUUrw_A0.wav",
+  "youtube_id": "EG_uUUrw_A0",
+  "role": "val",
+  "url": "https://www.youtube.com/watch?v=EG_uUUrw_A0",
+  "title": "Cassado Suite for Cello Solo, 1. Preludio-Fantasia | Yoonkyung Cho",
+  "channel": "CelloDeck"
+ },
+ "274e1d0dc3f4_115212366": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/ePPMrX4YtkM.wav",
+  "youtube_id": "ePPMrX4YtkM",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=ePPMrX4YtkM",
+  "title": "J S  Bach   The six cello suites   Pablo Casals, 1936 39",
+  "channel": "SShogun872Shogun"
+ },
+ "d601e7cebca9_14585936": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/PCicM6i59_I.wav",
+  "youtube_id": "PCicM6i59_I",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=PCicM6i59_I",
+  "title": "Bach Cello Suite No.1 - Prelude (Yo-Yo Ma)",
+  "channel": "Radu R\u00eec\u0103"
+ },
+ "db1522ee7d8f_30616656": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/BgbATcEcdOQ.wav",
+  "youtube_id": "BgbATcEcdOQ",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=BgbATcEcdOQ",
+  "title": "John Tavener - Thrinos, for solo cello, performed by Steven Isserlis on Good Friday 2020",
+  "channel": "Gabriel M W I"
+ },
+ "0d2b5a6e56df_14794158": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/1wS7UQqJ1Qc.wav",
+  "youtube_id": "1wS7UQqJ1Qc",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=1wS7UQqJ1Qc",
+  "title": "Bach: Solo Cello Suite No. 1 in G Major (BWV 1007) ---Prelude",
+  "channel": "Charles Curtis - Topic"
+ },
+ "f181b117e5a3_115212366": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/_NvZRo-3wvU.wav",
+  "youtube_id": "_NvZRo-3wvU",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=_NvZRo-3wvU",
+  "title": "Bach - Cello Suite no. 2 in D minor BWV 1008 - Pincombe | Netherlands Bach Society",
+  "channel": "Netherlands Bach Society"
+ },
+ "25d4906b6a32_115212366": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/WdJxvBvUHEE.wav",
+  "youtube_id": "WdJxvBvUHEE",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=WdJxvBvUHEE",
+  "title": "Johann Sebastian Bach   6 Suites For Cello Solo   Mischa Maisky",
+  "channel": "EXCICL"
+ },
+ "d39638fcb05d_52919472": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/RlR19YtF1E8.wav",
+  "youtube_id": "RlR19YtF1E8",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=RlR19YtF1E8",
+  "title": "G. Crumb: Sonata for Solo Cello, Santiago Ca\u00f1\u00f3n-Valencia",
+  "channel": "Santiago Ca\u00f1on-Valencia"
+ },
+ "83748901112b_52920398": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/rGgG-0lOJjk.wav",
+  "youtube_id": "rGgG-0lOJjk",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=rGgG-0lOJjk",
+  "title": "Yo-Yo Ma Bach Cello Suite No.1 in G Major",
+  "channel": "Thanyaphong Na nakorn"
+ },
+ "54acee2072a1_44982044": {
+  "file": "/home/qbrighto/music-visualizer/cleaned/cello_dataset/yhp5aGqte5s.wav",
+  "youtube_id": "yhp5aGqte5s",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=yhp5aGqte5s",
+  "title": "LIGETI | Sonata for cello solo - Narek Hakhnazaryan",
+  "channel": "S\u00fcdtirol in concert"
+ },
+ "980c9e969cf3_45863438": {
+  "file": "/home/qbrighto/music-visualizer/cleaned/cello_dataset/kuiQ5tt0iI8.wav",
+  "youtube_id": "kuiQ5tt0iI8",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=kuiQ5tt0iI8",
+  "title": "Alisa Weilerstein: NPR Music Tiny Desk Concert",
+  "channel": "NPR Music"
+ },
+ "c9a280de25fc_52920398": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/p5Sq_tJG8G4.wav",
+  "youtube_id": "p5Sq_tJG8G4",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=p5Sq_tJG8G4",
+  "title": "J\u00e1nos Starker / Cassad\u00f3 Cello Suite (Full) 1988",
+  "channel": "Mit Feuer"
+ },
+ "6eb0918f9a6c_111372332": {
+  "file": "/home/qbrighto/music-visualizer/cleaned/cello_dataset/FYUQYz-0yGw.wav",
+  "youtube_id": "FYUQYz-0yGw",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=FYUQYz-0yGw",
+  "title": "BACH Suites for solo cello 1-3, Jakob Koranyi - Cello",
+  "channel": "Jakob Koranyi"
+ },
+ "30643cfe3790_52919472": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/cGnZHIY_hoQ.wav",
+  "youtube_id": "cGnZHIY_hoQ",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=cGnZHIY_hoQ",
+  "title": "Bach - Cello Suite no. 1 in G major BWV 1007 - Swarts | Netherlands Bach Society",
+  "channel": "Netherlands Bach Society"
+ },
+ "6c0a17f4de6c_52920398": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/31vVpMC5uyc.wav",
+  "youtube_id": "31vVpMC5uyc",
+  "role": "val",
+  "url": "https://www.youtube.com/watch?v=31vVpMC5uyc",
+  "title": "Reger: Suite in G major for Solo Cello, Op. 131c, No. 1 - Emanuel Feuermann, 1934 - Columbia ML 4678",
+  "channel": "davidhertzberg"
+ },
+ "d64d0473c8fd_52919472": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/qtIrc7YUEvo.wav",
+  "youtube_id": "qtIrc7YUEvo",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=qtIrc7YUEvo",
+  "title": "Hindemith Cello Sonata Natalia Gutman",
+  "channel": "door433"
+ },
+ "64f34a81c390_115212366": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/ay2Y_TONYlc.wav",
+  "youtube_id": "ay2Y_TONYlc",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=ay2Y_TONYlc",
+  "title": "Bach: Cello Suite No. 1 in G major, BWV 1007 by Ailbhe McDonagh",
+  "channel": "Ailbhe McDonagh"
+ },
+ "4f31006f2d2b_48272464": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/O0_gw2Lillg.wav",
+  "youtube_id": "O0_gw2Lillg",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=O0_gw2Lillg",
+  "title": "Zolt\u00e1n Kod\u00e1ly, Sonata in B minor for solo cello, Op.8, mvt. III, performed by Sebastian B\u00e4verstam",
+  "channel": "Eidolon Records"
+ },
+ "f78ce7d138db_52919472": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/14MwGs3uA3A.wav",
+  "youtube_id": "14MwGs3uA3A",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=14MwGs3uA3A",
+  "title": "Bach at Home: Cello Suite No. 1 by Pieter Wispelwey",
+  "channel": "Orchestra of St. Luke's (OSL)"
+ },
+ "f08056b342d0_52920398": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/J9XADUdxzsE.wav",
+  "youtube_id": "J9XADUdxzsE",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=J9XADUdxzsE",
+  "title": "Adam Schreiber - Solo Cello Recital",
+  "channel": "AdamMusicWorld | Adam Schreiber"
+ },
+ "1e3790ae4623_10583438": {
+  "file": "/home/qbrighto/music-visualizer/cleaned/cello_dataset/hl8s3McG6lQ.wav",
+  "youtube_id": "hl8s3McG6lQ",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=hl8s3McG6lQ",
+  "title": "Matt Haimovitz profile (23 October 1988)",
+  "channel": "caramelorb"
+ },
+ "0ce55ef28fc7_18151504": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/N8fPc3OAH1I.wav",
+  "youtube_id": "N8fPc3OAH1I",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=N8fPc3OAH1I",
+  "title": "Britten Suite for Solo Cello, Op. 72 | Hannah Collins, cello | VI. Moto Perpetuo e Canto quarto",
+  "channel": "Hannah Collins Cello"
+ },
+ "3fd575d58c24_115212366": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/Rx_IibJH4rA.wav",
+  "youtube_id": "Rx_IibJH4rA",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=Rx_IibJH4rA",
+  "title": "Yo-Yo Ma - Nature at Play: J.S. Bach's Cello Suite No. 1 (Live from the Great Smoky Mountains)",
+  "channel": "YoYoMaVEVO"
+ },
+ "0b6b15729039_61456798": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/mmJim2h-byQ.wav",
+  "youtube_id": "mmJim2h-byQ",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=mmJim2h-byQ",
+  "title": "J. S. Bach - Toccata in D Minor - Konstandinos Boudounis - Solo Cello - live",
+  "channel": "Dimitrios Doulias"
+ },
+ "10754069e784_52920398": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/G7YucHPFJuE.wav",
+  "youtube_id": "G7YucHPFJuE",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=G7YucHPFJuE",
+  "title": "Max Reger Cello Suite No. 2 in D minor, Op. 131c No. 2",
+  "channel": "Alex Fowler"
+ },
+ "1072b76b9187_52920398": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/KnKA2Rr0yas.wav",
+  "youtube_id": "KnKA2Rr0yas",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=KnKA2Rr0yas",
+  "title": "Ysa\u00ffe - Sonata for Solo Cello in C Minor, Op. 28 - Richard Lester",
+  "channel": "Peasmarsh Chamber Music Festival"
+ },
+ "4e0f5978d4f2_52919472": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/5X9tssE7h6E.wav",
+  "youtube_id": "5X9tssE7h6E",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=5X9tssE7h6E",
+  "title": "Bach cello suite no. 1 in G major BWV 1007, Pieter Wispelwey",
+  "channel": "Muzikay"
+ },
+ "a8e901b7fe70_52920398": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/-C_JcGCY63A.wav",
+  "youtube_id": "-C_JcGCY63A",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=-C_JcGCY63A",
+  "title": "Britten Suite no. 3 for Solo Cello, op. 87 - Richard Narroway, Cello",
+  "channel": "Richard Narroway"
+ },
+ "1aa928d7af2a_52037438": {
+  "file": "/home/qbrighto/music-visualizer/cleaned/cello_dataset/a1B73Y7vUSA.wav",
+  "youtube_id": "a1B73Y7vUSA",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=a1B73Y7vUSA",
+  "title": "Paul Hindemith - Sonata for cello solo",
+  "channel": "\u041e\u041b\u0415\u041d\u0410 "
+ },
+ "3811437b13c6_14208040": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/tNUn4TyvdY0.wav",
+  "youtube_id": "tNUn4TyvdY0",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=tNUn4TyvdY0",
+  "title": "Mischa Maisky - Bach: Cello Suite No.1 in G Major: I. Prelude",
+  "channel": "Deutsche Grammophon - DG"
+ },
+ "9307da6a0c4e_16758044": {
+  "file": "/home/qbrighto/music-visualizer/cleaned/cello_dataset/eW6HzdNoOzQ.wav",
+  "youtube_id": "eW6HzdNoOzQ",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=eW6HzdNoOzQ",
+  "title": "Matt Haimovitz performs Prelude from Cello Suite No.1 in G major, BWV 1007 at Bach & now! Festival",
+  "channel": "Bach & now! "
+ },
+ "7474d03de60c_13439056": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/b_r2pzqN6Mg.wav",
+  "youtube_id": "b_r2pzqN6Mg",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=b_r2pzqN6Mg",
+  "title": "#songsofcomfort: Suite No. 1 for Cello, \"Sarabande,\" by J.S. Bach",
+  "channel": "Yo-Yo Ma"
+ },
+ "cdbdb38e9083_52919472": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/6msYAWVgN9A.wav",
+  "youtube_id": "6msYAWVgN9A",
+  "role": "val",
+  "url": "https://www.youtube.com/watch?v=6msYAWVgN9A",
+  "title": "Mstislav Rostropovich - Bach Cello Suite No 3 in C major BWV 1009",
+  "channel": "Davide Faloppa"
+ },
+ "65f77ad44d44_42336044": {
+  "file": "/home/qbrighto/music-visualizer/cleaned/cello_dataset/kkkfAeTWMtY.wav",
+  "youtube_id": "kkkfAeTWMtY",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=kkkfAeTWMtY",
+  "title": "Margarita Balanas (cello) plays Ligeti's Sonata for solo cello",
+  "channel": "StMarysPerivale"
+ },
+ "9950cf920bdf_52920398": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/wj27q7ccGSA.wav",
+  "youtube_id": "wj27q7ccGSA",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=wj27q7ccGSA",
+  "title": "Gaspar Cassado\u0301 - Suite for Violoncello Solo (with score)",
+  "channel": "PScoreLibrary"
+ },
+ "a282b0bc98bd_15311952": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/-817_8w9h-I.wav",
+  "youtube_id": "-817_8w9h-I",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=-817_8w9h-I",
+  "title": "Alisa Weilerstein: Bach Cello Suite No. 1 in G Major - Prelude",
+  "channel": "PENTATONE"
+ },
+ "341fdad47ddf_20272208": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/YpC9eZvcztI.wav",
+  "youtube_id": "YpC9eZvcztI",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=YpC9eZvcztI",
+  "title": "Ligeti Sonata for Solo Cello | Petar Pej\u010di\u0107 - Queen Elisabeth Competition 2022",
+  "channel": "Queen Elisabeth Competition"
+ },
+ "573c65bf10c5_14518974": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/zUKTmRAtUAo.wav",
+  "youtube_id": "zUKTmRAtUAo",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=zUKTmRAtUAo",
+  "title": "Reger: Suite No. 1 for Solo Cello in G Major, Op. 131c No. 1: I. Pr\u00e4ludium. Vivace",
+  "channel": "Alban Gerhardt - Topic"
+ },
+ "d34f99255aa9_14994364": {
+  "file": "/home/qbrighto/music-visualizer/cleaned/cello_dataset/1bAvW5RjqRU.wav",
+  "youtube_id": "1bAvW5RjqRU",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=1bAvW5RjqRU",
+  "title": "KU Cello Club 2021 Conference: Ashley Bathgate Solo Recital",
+  "channel": "Hannah Collins Cello"
+ },
+ "8b0bcdbeb546_52920398": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/6lEppoLA8O4.wav",
+  "youtube_id": "6lEppoLA8O4",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=6lEppoLA8O4",
+  "title": "Reger: 3 Suites for Cello Solo",
+  "channel": "Brilliant Classics"
+ },
+ "215843c9a67f_52919472": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/RzbTXqpuC14.wav",
+  "youtube_id": "RzbTXqpuC14",
+  "role": "val",
+  "url": "https://www.youtube.com/watch?v=RzbTXqpuC14",
+  "title": "Max Reger - 3 Suites for Solo Cello, Op.131c (1915)",
+  "channel": "Bartje Bartmans"
+ },
+ "a4bad2568ce7_11069246": {
+  "file": "/home/qbrighto/music-visualizer/cleaned/cello_dataset/F9E-5qUXMLs.wav",
+  "youtube_id": "F9E-5qUXMLs",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=F9E-5qUXMLs",
+  "title": "Matt Haimovitz promotional video (1988)",
+  "channel": "caramelorb"
+ },
+ "af8b7af10d88_48510364": {
+  "file": "/home/qbrighto/music-visualizer/cleaned/cello_dataset/evpQ_2bqrzw.wav",
+  "youtube_id": "evpQ_2bqrzw",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=evpQ_2bqrzw",
+  "title": "Bach Cello Suite Nr 1 in G Major - \"home made\" by Mischa MAISKY",
+  "channel": "Mischa Maisky"
+ },
+ "32e5350c8d3b_43931728": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/EZi8b5CtNSo.wav",
+  "youtube_id": "EZi8b5CtNSo",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=EZi8b5CtNSo",
+  "title": "Paolo Bonomini plays Gy\u00f6rgy Ligeti Sonata for cello solo",
+  "channel": "Paolo Bonomini"
+ },
+ "b77ec9c5f8da_52919472": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/Ng8QfKTk1KA.wav",
+  "youtube_id": "Ng8QfKTk1KA",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=Ng8QfKTk1KA",
+  "title": "G.Crumb Cello solo sonata, Benjamin Truchi. live in Japan",
+  "channel": "Benjamin Truchi"
+ },
+ "0b050ce2a209_40885328": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/aA0MHmwsq8U.wav",
+  "youtube_id": "aA0MHmwsq8U",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=aA0MHmwsq8U",
+  "title": "Gy\u00f6rgy Ligeti: Sonata for Solo Cello [w/ score]",
+  "channel": "Arash Azadi"
+ },
+ "e671a64d6486_52919472": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/xFlBZMiVMT0.wav",
+  "youtube_id": "xFlBZMiVMT0",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=xFlBZMiVMT0",
+  "title": "Paul Hindemith - Sonata for Cello solo, Op. 25 No. 3",
+  "channel": "St\u00e9phane T\u00e9treault"
+ },
+ "1cba79afdf8f_52919472": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/F3dNic_QQ24.wav",
+  "youtube_id": "F3dNic_QQ24",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=F3dNic_QQ24",
+  "title": "Sonata for Cello Solo- Hindemith (sheet music)",
+  "channel": "cello sheetmusic"
+ },
+ "d3d2cbab1c99_52919472": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/p9_hAw8HOMs.wav",
+  "youtube_id": "p9_hAw8HOMs",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=p9_hAw8HOMs",
+  "title": "Bach Cello Suite No 1 G maior BWV 1007 (Rostropovich)",
+  "channel": "Rico L"
+ },
+ "4802439e6927_113292332": {
+  "file": "/home/qbrighto/music-visualizer/cleaned/cello_dataset/MyPt0VAWyKM.wav",
+  "youtube_id": "MyPt0VAWyKM",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=MyPt0VAWyKM",
+  "title": "BACH, Cello Suite No.1 in G major, BWV 1007 | \uccbc\ub85c \uae40\uc9c4\uacbd | Jin-Kyung Kim",
+  "channel": "Jin-Kyung Kim \uae40\uc9c4\uacbd"
+ },
+ "9b18adf81127_115212366": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/ebMlp9Kc_bY.wav",
+  "youtube_id": "ebMlp9Kc_bY",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=ebMlp9Kc_bY",
+  "title": "Gaspar Cassad\u00f3 Suite for Cello Solo (Complete): Santiago Ca\u00f1\u00f3n Valencia",
+  "channel": "Santiago Ca\u00f1on-Valencia"
+ },
+ "bb22a4da49ab_52919472": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/ea7i-NKJs3o.wav",
+  "youtube_id": "ea7i-NKJs3o",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=ea7i-NKJs3o",
+  "title": "Bach: Cello Suite No. 5 in C minor, BWV 1011 by Ailbhe McDonagh",
+  "channel": "Ailbhe McDonagh"
+ },
+ "e12666244596_52919472": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/XLRoUNhdXKA.wav",
+  "youtube_id": "XLRoUNhdXKA",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=XLRoUNhdXKA",
+  "title": "Seungyeon Baik - 3rd Prize ArsClassica Competition 2024 | G. Crumb, Sonata for Cello Solo",
+  "channel": "VideoClassica"
+ },
+ "5e546b424451_52919472": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/LUo4EhxyN_Q.wav",
+  "youtube_id": "LUo4EhxyN_Q",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=LUo4EhxyN_Q",
+  "title": "G. Crumb Sonata for Solo Cello - Woochan Jeong",
+  "channel": "Woochan Jeong"
+ },
+ "150fc99bd625_52919472": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/YbsCnogb0X4.wav",
+  "youtube_id": "YbsCnogb0X4",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=YbsCnogb0X4",
+  "title": "Steven Isserlis\u2014Bach Suite for Solo Cello No. 5 in C Minor, BWV 1011",
+  "channel": "The 92nd Street Y, New York"
+ },
+ "f82a88d8204a_52920398": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/hvyVMwNNl6U.wav",
+  "youtube_id": "hvyVMwNNl6U",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=hvyVMwNNl6U",
+  "title": "Gaspar Cassado Suite for Cello Solo - Hayoung Choi Cello",
+  "channel": "Hayoung Choi"
+ },
+ "06bf78e4672a_52920398": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/ESnKDVj_nOo.wav",
+  "youtube_id": "ESnKDVj_nOo",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=ESnKDVj_nOo",
+  "title": "Benjamin Britten: Cello Suite No. 3, Op. 87 (Cello: Jean-Guihen Queyras)",
+  "channel": "Rique Borges"
+ },
+ "9dc9c887cb79_52920398": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/ARfFzfGs_JQ.wav",
+  "youtube_id": "ARfFzfGs_JQ",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=ARfFzfGs_JQ",
+  "title": "B. Britten - Suite no. 1 for Solo Cello, op. 72 [SCORE VIDEO]",
+  "channel": "Composer's Canvas"
+ },
+ "ffcc9efb70c1_115212366": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/pDHTJ-RXw78.wav",
+  "youtube_id": "pDHTJ-RXw78",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=pDHTJ-RXw78",
+  "title": "Yo Yo Ma - Bach Six Cello Suites - The Odeon of Herodes Atticus Greek Live",
+  "channel": "Ruohao Chen"
+ },
+ "96bb30d6f1b7_52919472": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/C9yUHx26cYo.wav",
+  "youtube_id": "C9yUHx26cYo",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=C9yUHx26cYo",
+  "title": "Pieter Wispelwey and the Bach Cello Suites Documentary",
+  "channel": "colin hill"
+ },
+ "eabcf3ae1b10_115212366": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/Nu9MDqGhIak.wav",
+  "youtube_id": "Nu9MDqGhIak",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=Nu9MDqGhIak",
+  "title": "Yo Yo Ma - Bach Six Cello Suites - BBC Proms 2015",
+  "channel": "Abraham Wu"
+ },
+ "d4edc81695fe_36382696": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/1P7_GdKuqE8.wav",
+  "youtube_id": "1P7_GdKuqE8",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=1P7_GdKuqE8",
+  "title": "Ysa\u00ffe: Sonata for Solo Cello, Op. 28: I. | Christine J. Lee, cello",
+  "channel": "Heifetz International Music Institute"
+ },
+ "36e4b65f8d88_47160400": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/yhp5aGqte5s.wav",
+  "youtube_id": "yhp5aGqte5s",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=yhp5aGqte5s",
+  "title": "LIGETI | Sonata for cello solo - Narek Hakhnazaryan",
+  "channel": "S\u00fcdtirol in concert"
+ },
+ "3b7924614261_52919472": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/kuiQ5tt0iI8.wav",
+  "youtube_id": "kuiQ5tt0iI8",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=kuiQ5tt0iI8",
+  "title": "Alisa Weilerstein: NPR Music Tiny Desk Concert",
+  "channel": "NPR Music"
+ },
+ "595edc96a2e8_115212366": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/FYUQYz-0yGw.wav",
+  "youtube_id": "FYUQYz-0yGw",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=FYUQYz-0yGw",
+  "title": "BACH Suites for solo cello 1-3, Jakob Koranyi - Cello",
+  "channel": "Jakob Koranyi"
+ },
+ "c9b8e93d37eb_52919472": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/hl8s3McG6lQ.wav",
+  "youtube_id": "hl8s3McG6lQ",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=hl8s3McG6lQ",
+  "title": "Matt Haimovitz profile (23 October 1988)",
+  "channel": "caramelorb"
+ },
+ "e66c68a222f6_19116112": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/DTuUSn4QG48.wav",
+  "youtube_id": "DTuUSn4QG48",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=DTuUSn4QG48",
+  "title": "MATT HAIMOVITZ promotional video: Bach Overtures",
+  "channel": "PENTATONE"
+ },
+ "f6baa13709ae_52919472": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/a1B73Y7vUSA.wav",
+  "youtube_id": "a1B73Y7vUSA",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=a1B73Y7vUSA",
+  "title": "Paul Hindemith - Sonata for cello solo",
+  "channel": "\u041e\u041b\u0415\u041d\u0410 "
+ },
+ "c9734ec56c55_17506486": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/eW6HzdNoOzQ.wav",
+  "youtube_id": "eW6HzdNoOzQ",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=eW6HzdNoOzQ",
+  "title": "Matt Haimovitz performs Prelude from Cello Suite No.1 in G major, BWV 1007 at Bach & now! Festival",
+  "channel": "Bach & now! "
+ },
+ "1532e6c56165_43589710": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/kkkfAeTWMtY.wav",
+  "youtube_id": "kkkfAeTWMtY",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=kkkfAeTWMtY",
+  "title": "Margarita Balanas (cello) plays Ligeti's Sonata for solo cello",
+  "channel": "StMarysPerivale"
+ },
+ "d7d8f618c594_52920398": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/1bAvW5RjqRU.wav",
+  "youtube_id": "1bAvW5RjqRU",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=1bAvW5RjqRU",
+  "title": "KU Cello Club 2021 Conference: Ashley Bathgate Solo Recital",
+  "channel": "Hannah Collins Cello"
+ },
+ "36f53d5968e8_27827280": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/F9E-5qUXMLs.wav",
+  "youtube_id": "F9E-5qUXMLs",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=F9E-5qUXMLs",
+  "title": "Matt Haimovitz promotional video (1988)",
+  "channel": "caramelorb"
+ },
+ "52b45c75d73b_52920398": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/evpQ_2bqrzw.wav",
+  "youtube_id": "evpQ_2bqrzw",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=evpQ_2bqrzw",
+  "title": "Bach Cello Suite Nr 1 in G Major - \"home made\" by Mischa MAISKY",
+  "channel": "Mischa Maisky"
+ },
+ "8fe2fea7ee9c_115212366": {
+  "file": "/home/qbrighto/music-visualizer/cello_dataset/MyPt0VAWyKM.wav",
+  "youtube_id": "MyPt0VAWyKM",
+  "role": "train",
+  "url": "https://www.youtube.com/watch?v=MyPt0VAWyKM",
+  "title": "BACH, Cello Suite No.1 in G major, BWV 1007 | \uccbc\ub85c \uae40\uc9c4\uacbd | Jin-Kyung Kim",
+  "channel": "Jin-Kyung Kim \uae40\uc9c4\uacbd"
+ },
+ "e5a72e44efce_96898128": {
+  "file": "downloads/Yo-Yo Ma Bach Cello Suite No.1 in G Major.wav",
+  "youtube_id": null,
+  "role": "train",
+  "url": null,
+  "title": "Yo-Yo Ma Bach Cello Suite No.1 in G Major",
+  "channel": "Yo-Yo Ma (performer)"
+ },
+ "ee6238b1bbe1_272957518": {
+  "file": "oos_test/Bach - Cello Suite No. 2 [BWV 1008] - Mischa Maisky.wav",
+  "youtube_id": null,
+  "role": "test",
+  "url": null,
+  "title": "Bach - Cello Suite No. 2 [BWV 1008] - Mischa Maisky",
+  "channel": "Mischa Maisky (performer)"
+ }
+}
