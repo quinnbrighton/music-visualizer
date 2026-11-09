@@ -13,15 +13,19 @@ c_ = torch.load(f"{R}/reg3/codec_snd_s8000.pt", map_location=dev, weights_only=F
 spl = torch.load(f"{H}/colab/cello_gan/multirate_nested.pt", map_location="cpu", weights_only=False); PUSH, SEC = 20.0, 12
 
 # loudness direction: least-squares slope of the pitch-removed latent on loudness (dB), from the training recordings
-rng = np.random.default_rng(0); Z, S, L = [], [], []
+rng = np.random.default_rng(0); Z, S, L, RC = [], [], [], []
 for t in spl["train"]:
     if not os.path.exists(f"{LAT}/{t}.npy"): continue
     z = np.load(f"{LAT}/{t}.npy").astype(np.float32); c = np.load(f"{CTL}/{t}.npy"); n = min(len(z), len(c)); pick = rng.choice(n, min(800, n), replace=False)
-    Z.append(z[pick]); S.append(np.where(c[pick, 1] > 0.5, np.round(69 + 12 * np.log2(np.clip(c[pick, 0], 40, 1200) / 440)), -1)); L.append(c[pick, 2])
-Z, S, L = np.concatenate(Z), np.concatenate(S).astype(int), np.concatenate(L)
-r = Z - Z.mean(0)
+    Z.append(z[pick]); S.append(np.where(c[pick, 1] > 0.5, np.round(69 + 12 * np.log2(np.clip(c[pick, 0], 40, 1200) / 440)), -1)); L.append(c[pick, 2]); RC.append(np.full(len(pick), len(RC)))
+Z, S, L, RC = np.concatenate(Z), np.concatenate(S).astype(int), np.concatenate(L), np.concatenate(RC)
+WITHIN = int(os.environ.get("WITHIN", 1))                                  # 1: remove each recording's average first, so the direction only learns loudness changes within a recording
+r = Z - Z.mean(0); Lc = L - L.mean()
+if WITHIN:
+    for k in np.unique(RC): r[RC == k] -= r[RC == k].mean(0); Lc[RC == k] -= Lc[RC == k].mean()
 for k in np.unique(S): r[S == k] -= r[S == k].mean(0)
-Lc = L - L.mean(); dirL = (r * Lc[:, None]).sum(0) / (Lc ** 2).sum()
+dirL = (r * Lc[:, None]).sum(0) / (Lc ** 2).sum()
+print("loudness direction (%s): %.3f latent units per dB" % ("within recordings" if WITHIN else "across recordings", np.linalg.norm(dirL)), flush=True)
 
 
 @torch.no_grad()

@@ -279,8 +279,9 @@ order. I subtracted one factor at a time, removing each group's average, and mea
 *With pitch subtracted, loudness becomes the main axis (right), and frames from the same recording stay close together (middle).*
 
 **Editing music by moving through the latent.** If loudness is a direction in the latent, you can push along it. I fitted that
-direction from the training recordings, using how each frame's latent changes with its loudness once pitch is removed, then added it to
-a performance and decoded the result. The push doesn't act like a volume knob. The decoder rebuilds the sound as if the cellist had
+direction from the training recordings, using how each frame's latent changes with its loudness once pitch and each recording's
+average are removed, so it only learns from dynamics within a performance, not from how loudly a recording was mixed. Then I added it
+to a performance and decoded the result. The push doesn't act like a volume knob. The decoder rebuilds the sound as if the cellist had
 played harder.
 
 Listen: [the held-out Maisky passage, reconstruction then the loudness push at the same level](docs/assets/audio/11_loudness_push.mp4).
@@ -292,18 +293,21 @@ sound is produced differs from its own reconstruction.*
 
 | After removing the level change | Median across 89 recordings | Recordings changing this way |
 |---|---|---|
-| upper harmonics (1–4 kHz) vs fundamentals | **+1.5 dB** | 85 / 89 |
-| level peaks above average (crest) | **−1.1 dB**: more sustained, pressed tone | 80 / 89 |
-| brightness (spectral centroid) | **+10.5%** | 79 / 89 |
-| clarity between harmonics | **−0.7 dB**: more bow noise, scratchier | 72 / 89 |
+| upper harmonics (1–4 kHz) vs fundamentals | **+1.3 dB** | 83 / 89 |
+| level peaks above average (crest) | **−1.2 dB**: more sustained, pressed tone | 79 / 89 |
+| brightness (spectral centroid) | **+9.0%** | 81 / 89 |
+| clarity between harmonics | **−0.6 dB**: more bow noise, scratchier | 69 / 89 |
 | attack sharpness | no change | n/a |
 
 - **The balance of the sound changes.** Energy moves out of the fundamentals below about 125 Hz and into 1–3 kHz, the range where a
   hard-bowed cello gets its bite, and noise creeps between the harmonics. That is what heavier bow pressure does to a real cello. The
   codec learned it from the recordings alone; nothing told it what loud playing sounds like.
-- **The level change is limited and consistent.** A +20 push raises the level by a median of 9.8 dB. The decoder won't go much
+- **The level change is limited and consistent.** A +20 push raises the level by a median of 9.6 dB. The decoder won't go much
   beyond the dynamics it heard in training.
 - **It holds on unseen recordings.** On the 6 held-out recordings the effects point the same way.
+- **It isn't a mixing artifact.** Fitting the direction across recordings instead, without removing each recording's average, gives
+  almost the same direction (cosine similarity 0.998): most loudness variation (12 dB) is within performances, not between how
+  recordings were mixed (5 dB).
 - **Attacks stay the same.** This direction encodes sustained loud tone, not sharper bow strokes; a separate direction would be needed
   for those.
 

@@ -8,14 +8,15 @@ from PIL import Image, ImageDraw, ImageFont
 H = os.path.expanduser("~/music-visualizer"); R = f"{H}/colab_results"; LAT = f"{R}/reg3/tok/latents"; CTL = f"{H}/tokens64/controls"; AUD = f"{H}/docs/assets/audio"
 c_ = torch.load(f"{R}/reg3/codec_snd_s8000.pt", map_location=dev, weights_only=False); model.load_state_dict(c_["model"]); model.eval()
 spl = torch.load(f"{H}/colab/cello_gan/multirate_nested.pt", map_location="cpu", weights_only=False); k = spl["test"][0]
-rng = np.random.default_rng(0); Z, S, L = [], [], []                        # loudness direction, exactly as in loudness_push_stats.py
+rng = np.random.default_rng(0); Z, S, L, RC = [], [], [], []               # loudness direction, exactly as in loudness_push_stats.py (within recordings)
 for t in spl["train"]:
     if not os.path.exists(f"{LAT}/{t}.npy"): continue
     z = np.load(f"{LAT}/{t}.npy").astype(np.float32); c = np.load(f"{CTL}/{t}.npy"); n = min(len(z), len(c)); pick = rng.choice(n, min(800, n), replace=False)
-    Z.append(z[pick]); S.append(np.where(c[pick, 1] > 0.5, np.round(69 + 12 * np.log2(np.clip(c[pick, 0], 40, 1200) / 440)), -1)); L.append(c[pick, 2])
-Z, S, L = np.concatenate(Z), np.concatenate(S).astype(int), np.concatenate(L); r = Z - Z.mean(0)
+    Z.append(z[pick]); S.append(np.where(c[pick, 1] > 0.5, np.round(69 + 12 * np.log2(np.clip(c[pick, 0], 40, 1200) / 440)), -1)); L.append(c[pick, 2]); RC.append(np.full(len(pick), len(RC)))
+Z, S, L, RC = np.concatenate(Z), np.concatenate(S).astype(int), np.concatenate(L), np.concatenate(RC); r = Z - Z.mean(0); Lc = L - L.mean()
+for g in np.unique(RC): r[RC == g] -= r[RC == g].mean(0); Lc[RC == g] -= Lc[RC == g].mean()
 for g in np.unique(S): r[S == g] -= r[S == g].mean(0)
-Lc = L - L.mean(); dirL = (r * Lc[:, None]).sum(0) / (Lc ** 2).sum()
+dirL = (r * Lc[:, None]).sum(0) / (Lc ** 2).sum()
 
 
 @torch.no_grad()
