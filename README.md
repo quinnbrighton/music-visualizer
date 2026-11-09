@@ -243,8 +243,8 @@ saturation the pitch tracker's confidence. Large dots mark the median position o
 
 ![The sound space in 3D, spinning](docs/assets/umap3d_spin.gif)
 
-*The same colouring on a 3D UMAP of the same frames, spinning around the vertical axis. Blobs mark the centroid of each note, sized by
-how often it is played, with the four open strings labelled. The note islands keep their shape from every side. [Higher quality video](docs/assets/audio/umap3d_spin.mp4).*
+*The same colouring on a 3D UMAP of the same frames, spinning around the vertical axis. Small dots mark the centroid of each note; the four
+open strings (C, G, D, A) have black outlines. The note islands keep their shape from every side. [Higher quality video](docs/assets/audio/umap3d_spin.mp4).*
 
 - **Each note forms its own islands.** The latent was never told note names, but frames of the same note cluster together.
 - **The space snakes by register.** Following the medians from D3 upward, the notes sweep across the whole map toward the highest

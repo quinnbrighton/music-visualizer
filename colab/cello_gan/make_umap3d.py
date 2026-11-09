@@ -29,21 +29,18 @@ xyz -= (np.percentile(xyz, 1, 0) + np.percentile(xyz, 99, 0)) / 2           # ce
 sc = ax.scatter(xyz[o, 0], xyz[o, 1], xyz[o, 2], c=col, s=3, lw=0, depthshade=False, alpha=None); ax.set_axis_off()
 Pr = np.round(P).astype(int); semis = np.array([s_ for s_ in range(Pr.min(), Pr.max() + 1) if (Pr == s_).sum() >= 100])
 cnt = np.array([(Pr == s_).sum() for s_ in semis]); cen = np.array([np.median(xyz[Pr == s_], 0) for s_ in semis])   # centroid of every semitone
-bc = note_col(semis.astype(float), np.ones(len(semis)), 1.0); bs = 30 + 520 * cnt / cnt.max()     # blob area proportional to how often the note is played
-sb = ax.scatter(cen[:, 0], cen[:, 1], cen[:, 2], c=bc, s=bs, edgecolor="#0b0b0b", lw=0.8, depthshade=False, zorder=5)
-OPEN = {36: "open C", 43: "open G", 50: "open D", 57: "open A"}
+bc = note_col(semis.astype(float), np.ones(len(semis)), 1.0); bs = np.full(len(semis), 34.0)
+OPEN = {36: "open C", 43: "open G", 50: "open D", 57: "open A"}; isopen = np.isin(semis, list(OPEN))
+sb = ax.scatter(cen[:, 0], cen[:, 1], cen[:, 2], c=bc, s=np.where(isopen, 60, bs), edgecolor=np.where(isopen[:, None], [[0.04, 0.04, 0.04, 1]], [[1, 1, 1, 1]]), lw=np.where(isopen, 2.0, 0.8), depthshade=False, zorder=5)
 r = np.percentile(np.linalg.norm(xyz, axis=1), 99); c0 = np.zeros(3)                  # sphere that holds the cloud at any rotation
 ax.set_xlim(c0[0] - r, c0[0] + r); ax.set_ylim(c0[1] - r, c0[1] + r); ax.set_zlim(c0[2] - r, c0[2] + r); ax.set_box_aspect((1, 1, 1), zoom=1.6)
 fig.text(0.03, 0.95, "The cello sound space in 3D", fontsize=12, weight="bold")
-fig.text(0.03, 0.885, "hue = note name, brightness = octave, saturation = pitch confidence\nblobs = centroid of each note, sized by how often it is played", fontsize=8.5, color="#52514e")
+fig.text(0.03, 0.885, "hue = note name, brightness = octave, saturation = pitch confidence\ndots = centroid of each note; black outline = the four open strings (C, G, D, A)", fontsize=8.5, color="#52514e")
 tmp = "/tmp/_umap3d"; os.makedirs(tmp, exist_ok=True)
 ax.view_init(elev=10, azim=-90)                                            # camera fixed; z is vertical on screen
 for i, ang in enumerate(range(0, 360, 5)):
     R = rot(np.radians(ang), "z").T; q = xyz[o] @ R; sc._offsets3d = (q[:, 0], q[:, 1], q[:, 2]); qc = cen @ R; sb._offsets3d = (qc[:, 0], qc[:, 1], qc[:, 2])
-    lab = [ax.text(qc[j, 0], qc[j, 1], qc[j, 2] + 0.12 * r, OPEN[s_], fontsize=9, weight="bold", ha="center", zorder=10, bbox=dict(boxstyle="round,pad=0.2", fc=BG, ec="#0b0b0b", lw=0.6))
-           for j, s_ in enumerate(semis) if s_ in OPEN]
     fig.savefig(f"{tmp}/f{i:03d}.png", dpi=80, facecolor=BG)
-    for t_ in lab: t_.remove()
 plt.close(fig)
 subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-framerate", "12", "-i", f"{tmp}/f%03d.png", "-vf",
                 "scale=420:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=96:stats_mode=diff[p];[b][p]paletteuse=dither=bayer:bayer_scale=4:diff_mode=rectangle", "-loop", "0", f"{OUTD}/umap3d_spin.gif"], check=True)
